@@ -13,21 +13,21 @@
 <body>
  
 <div class="login-main">
-    <header class="layui-elip">登录</header>
+    <header class="layui-elip">Log in</header>
     <form class="layui-form">
         <div class="layui-input-inline">
-            <input type="text" name="account" required lay-verify="required" placeholder="用户名" autocomplete="off"
+            <input type="text" name="account" required lay-verify="required" placeholder="username" autocomplete="off"
                    class="layui-input">
         </div>
         <div class="layui-input-inline">
-            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
+            <input type="password" name="password" required lay-verify="required" placeholder="password" autocomplete="off"
                    class="layui-input">
         </div>
         <div class="layui-input-inline login-btn">
-            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+            <button lay-submit lay-filter="login" class="layui-btn">Log in</button>
         </div>
         <hr/>
-        <p><a href="/api/user_action?action=register" class="fl">立即注册</a><a href="javascript:;" class="fr">忘记密码？</a></p>
+        <p><a href="/api/user_action?action=register" class="fl">Sign up now</a><a href="javascript:;" class="fr">forget the password?</a></p>
     </form>
 </div>
  
@@ -59,7 +59,7 @@
             return false;
         })
         $('.fr').on('click', function(){
-            layer.alert("这么简易的东西，忘记密码这功能就没必要了吧。",{icon:5});
+            layer.alert("Such a simple thing, it is not necessary to forget the password.",{icon:5});
         })
 
  

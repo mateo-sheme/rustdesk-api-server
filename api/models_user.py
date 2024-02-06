@@ -29,7 +29,7 @@ class MyUserManager(BaseUserManager):
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField('用户名', 
+    username = models.CharField('username', 
                                 unique=True,
                                 max_length=50)
     
@@ -37,15 +37,15 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     uuid = models.CharField(verbose_name='uuid', max_length=60)
     autoLogin = models.BooleanField(verbose_name='autoLogin', default=True)
     rtype = models.CharField(verbose_name='rtype', max_length=20)
-    deviceInfo = models.TextField(verbose_name='登录信息:', blank=True)
+    deviceInfo = models.TextField(verbose_name='login information:', blank=True)
     
-    is_active = models.BooleanField(verbose_name='是否激活', default=True)
-    is_admin = models.BooleanField(verbose_name='是否管理员', default=False)
+    is_active = models.BooleanField(verbose_name='Activate now', default=True)
+    is_admin = models.BooleanField(verbose_name='Whether a administrator', default=False)
 
     objects = MyUserManager()
  
-    USERNAME_FIELD = 'username'  # 用作用户名的字段
-    REQUIRED_FIELDS = ['password']     #必须填写的字段
+    USERNAME_FIELD = 'username'  # Fields used for household names
+    REQUIRED_FIELDS = ['password']     #The field that must be filled in
     
     
     def get_full_name(self):
@@ -59,7 +59,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):              # __unicode__ on Python 2
         return self.username
  
-    def has_perm(self, perm, obj=None):    #有没有指定的权限
+    def has_perm(self, perm, obj=None):    #Is there any specified permission
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
@@ -79,8 +79,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
     
-        verbose_name = "用户"
-        verbose_name_plural = "用户列表"
+        verbose_name = "user"
+        verbose_name_plural = "user list"
         permissions = (
             ("view_task", "Can see available tasks"),
             ("change_task_status", "Can change the status of tasks"),

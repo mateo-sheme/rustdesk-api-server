@@ -14,14 +14,14 @@
 <body>
  
 <div class="login-main">
-    <header class="layui-elip" style="width: 82%">注册页</header>
+    <header class="layui-elip" style="width: 82%">Registration page</header>
  
     <!-- 表单选项 -->
     <form class="layui-form">
         <div class="layui-input-inline">
             <!-- 用户名 -->
             <div class="layui-inline" style="width: 85%">
-                <input type="text" id="user" name="account" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                <input type="text" id="user" name="account" required  lay-verify="required" placeholder="please enter user name" autocomplete="off" class="layui-input">
             </div>
             <!-- 对号 -->
             <div class="layui-inline">
@@ -35,21 +35,21 @@
             <!-- 密码 -->
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <input type="password" id="pwd" name="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="password" id="pwd" name="password" required  lay-verify="required" placeholder="Please enter the password" autocomplete="off" class="layui-input">
             </div>
-            <!-- 对号 -->
+            <!-- Signs -->
             <div class="layui-inline">
                 <i class="layui-icon" id="pri" style="color: green;font-weight: bolder;" hidden></i>
             </div>
-            <!-- 错号 -->
+            <!-- Wrong number -->
             <div class="layui-inline">
-                <i class="layui-icon" id="pwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                <i class="layui-icon" id="pwr" style="color: red; font-weight: bolder;" hidden>Gauge</i>
             </div>
         </div>
             <!-- 确认密码 -->
         <div class="layui-input-inline">
             <div class="layui-inline" style="width: 85%">
-                <input type="password" id="rpwd" name="repassword" required  lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input">
+                <input type="password" id="rpwd" name="repassword" required  lay-verify="required" placeholder="Please confirm your password" autocomplete="off" class="layui-input">
             </div>
             <!-- 对号 -->
             <div class="layui-inline">
@@ -63,10 +63,10 @@
  
  
         <div class="layui-input-inline login-btn" style="width: 85%">
-            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">注册</button>
+            <button type="submit" lay-submit lay-filter="sub" class="layui-btn">register</button>
         </div>
         <hr style="width: 85%" />
-        <p style="width: 85%"><a href="/api/user_action?action=login" class="fl">已有账号？立即登录</a></p>
+        <p style="width: 85%"><a href="/api/user_action?action=login" class="fl">Existing account?log in immediately</a></p>
     </form>
 </div>
  
@@ -94,7 +94,7 @@
                     //layer.msg('请输入合法密码');
                     $('#pwr').removeAttr('hidden');
                     $('#pri').attr('hidden','hidden');
-                    layer.msg('请输入8~20位密码。可以包含字母、数字和特殊字符。');
+                    layer.msg('Please enter 8 ~ 20 passwords.It can contain letters, numbers and special characters.');
                 }else {
                     $('#pri').removeAttr('hidden');
                     $('#pwr').attr('hidden','hidden');
@@ -106,7 +106,7 @@
                 if($('#pwd').val() != $('#rpwd').val()){
                     $('#rpwr').removeAttr('hidden');
                     $('#rpri').attr('hidden','hidden');
-                    layer.msg('两次输入密码不一致!');
+                    layer.msg('Two input passwords are inconsistent!');
                 }else {
                     $('#rpri').removeAttr('hidden');
                     $('#rpwr').attr('hidden','hidden');
@@ -126,7 +126,7 @@
                 },
                 success:function(data){
                     if (data.code == 1) {
-                        layer.msg('注册成功，请前往登录页登录。');
+                        layer.msg('If you register successfully, go to the login page and log in.');
                         ///location.href = "login.html";
                     }else {
                         layer.msg(data.msg);

@@ -32,25 +32,25 @@ def getStrMd5(s):
 
 def model_to_dict2(instance, fields=None, exclude=None, replace=None, default=None):
     """
-    :params instance: 模型对象，不能是queryset数据集
-    :params fields: 指定要展示的字段数据，('字段1','字段2')
-    :params exclude: 指定排除掉的字段数据,('字段1','字段2')
-    :params replace: 将字段名字修改成需要的名字，{'数据库字段名':'前端展示名'}
-    :params default: 新增不存在的字段数据，{'字段':'数据'}
+    :params instance: Model object, not the QuerySet data set
+    :params fields: Specify the field data to be displayed,('Field 1','Field 2')
+    :params exclude: Specify the field data that is eliminated,('Field 1','Field 2')
+    :params replace: Modify the field name to the required name,{'Database field name':'Front -end display name'}
+    :params default: Added no existing field data,{'Field':'data'}
     """
     # 对传递进来的模型对象校验
     if not isinstance(instance, Model):
-        raise Exception('model_to_dict接收的参数必须是模型对象')
+        raise Exception('Model_to_dict parameters must be a model object')
     # 对替换数据库字段名字校验
     if replace and type(replace) == dict:
         for replace_field in replace.values():
             if hasattr(instance, replace_field):
-                raise Exception(f'model_to_dict,要替换成{replace_field}字段已经存在了')
+                raise Exception(f'model_to_dict,To replace{replace_field}The field already exists')
     # 对要新增的默认值进行校验
     if default and type(default) == dict:
         for default_key in default.keys():
             if hasattr(instance, default_key):
-                raise Exception(f'model_to_dict,要新增默认值，但字段{default_key}已经存在了')
+                raise Exception(f'model_to_dict,To add silence，Field{default_key}Already exist')
     opts = instance._meta
     data = {}
     for f in chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
@@ -125,14 +125,14 @@ def user_login(request):
     username = request.POST.get('account', '')
     password = request.POST.get('password', '')
     if not username or not password:
-        return JsonResponse({'code':0, 'msg':'出了点问题。'})
+        return JsonResponse({'code':0, 'msg':'There is something wrong.'})
 
     user = auth.authenticate(username=username,password=password)
     if user:
         auth.login(request, user)
         return JsonResponse({'code':1, 'url':'/api/work'})
     else:
-        return JsonResponse({'code':0, 'msg':'帐号或密码错误！'})
+        return JsonResponse({'code':0, 'msg':'account or password incorrect!'})
 
 def user_register(request):
     info = ''
@@ -147,18 +147,18 @@ def user_register(request):
     password1 = request.POST.get('pwd', '')
 
     if len(username) <= 3:
-        info = '用户名不得小于3位'
+        info = 'The username must not be less than 3'
         result['msg'] = info
         return JsonResponse(result)
 
     if len(password1)<8 or len(password1)>20:
-        info = '密码长度不符合要求, 应在8~20位。'
+        info = 'The password length does not meet the requirements, It should be 8 ~ 20.'
         result['msg'] = info
         return JsonResponse(result)
 
     user = UserProfile.objects.filter(Q(username=username)).first()
     if user:
-        info = '用户名已存在。'
+        info = 'Username already exists.'
         result['msg'] = info
         return JsonResponse(result)
     user = UserProfile(
@@ -196,7 +196,7 @@ def get_single_info(uid):
         peers[rid]['os'] = device.os
 
     for rid in peers.keys():
-        peers[rid]['has_rhash'] = '是' if len(peers[rid]['rhash'])>1 else '否'
+        peers[rid]['has_rhash'] = 'yes' if len(peers[rid]['rhash'])>1 else 'no'
 
     return [v for k,v in peers.items()]
 
@@ -258,15 +258,15 @@ def share(request):
             shash = url.split('/')[-1]
             sharelink = ShareLink.objects.filter(Q(shash=shash))
             msg = ''
-            title = '成功'
+            title = 'success'
             if not sharelink:
-                title = '错误'
-                msg = f'链接{url}:<br>分享链接不存在或已失效。'
+                title = 'mistake'
+                msg = f'Link{url}:<br>Share the link does not exist or have failed.'
             else:
                 sharelink = sharelink[0]
                 if str(request.user.id) == str(sharelink.uid):
-                    title = '错误'
-                    msg = f'链接{url}:<br><br>咱就说，你不能把链接分享给自己吧？！'
+                    title = 'mistake'
+                    msg = f'Link{url}:<br><br>Lets say, you cant share the link to yourself, right?Intersection'
                 else:
                     sharelink.is_used = True
                     sharelink.save()
@@ -283,11 +283,11 @@ def share(request):
                         #peer = RustDeskPeer.objects.get(rid=peer.rid)
                         peer_f = RustDeskPeer.objects.filter(Q(rid=peer.rid) & Q(uid=sharelink.uid))
                         if not peer_f:
-                            msg += f"{peer.rid}已存在,"
+                            msg += f"{peer.rid}existed,"
                             continue
                         
                         if len(peer_f) > 1:
-                             msg += f'{peer.rid}存在多个,已经跳过。 '
+                             msg += f'{peer.rid}There are multiple,Has skipped. '
                              continue
                         peer = peer_f[0]
                         peer.id = None
@@ -295,7 +295,7 @@ def share(request):
                         peer.save()
                         msg += f"{peer.rid},"
 
-                    msg += '已被成功获取。'
+                    msg += 'Has been successfully obtained.'
 
             return render(request, 'msg.html', {'title':msg, 'msg':msg})
     else:
@@ -303,7 +303,7 @@ def share(request):
 
         data = json.loads(data)
         if not data:
-            return JsonResponse({'code':0, 'msg':'数据为空。'})
+            return JsonResponse({'code':0, 'msg':'The data is empty.'})
         rustdesk_ids = [x['title'].split('|')[0] for x in data]
         rustdesk_ids = ','.join(rustdesk_ids)
         sharelink = ShareLink(
