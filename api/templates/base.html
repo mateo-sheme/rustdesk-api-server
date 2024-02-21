@@ -27,15 +27,15 @@
     </script>
 
     <ul class="layui-nav">
-        <li class="layui-nav-item"><a href="/">front page</a></li>
-        <li class="layui-nav-item"><a href="/api/share">share</a></li>
+        <li class="layui-nav-item"><a href="/">Home</a></li>
+        <li class="layui-nav-item"><a href="/api/share">Share</a></li>
         <li class="layui-nav-item"><a href="/webui" target="_blank">Web control</a></li>
 
         {% if u.is_admin %}
-        <li class="layui-nav-item"><a href="/admin" target="_blank">Management background</a>
+        <li class="layui-nav-item"><a href="/admin" target="_blank">Management</a>
         </li>
         {% endif %}
-        <li class="layui-nav-item"><a href="/api/user_action?action=logout" target="_blank">quit</a></li>
+        <li class="layui-nav-item"><a href="/api/user_action?action=logout" target="_blank">Logout</a></li>
     </ul>
 
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
