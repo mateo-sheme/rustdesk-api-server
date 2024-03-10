@@ -8,6 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.conf import settings
 
 from itertools import chain
 from django.db.models.fields import DateTimeField, DateField, CharField, TextField
@@ -17,6 +20,9 @@ import json
 import time
 import hashlib
 import sys
+
+from io import BytesIO
+import xlwt
 
 salt = 'xiaomo'
 EFFECTIVE_SECONDS = 7200
@@ -72,7 +78,7 @@ def model_to_dict2(instance, fields=None, exclude=None, replace=None, default=No
         if type(f) == DateTimeField:
             # 字段类型是，DateTimeFiled 使用自己的方式操作
             value = getattr(instance, key)
-            value = datetime.datetime.strftime(value, '%Y-%m-%d')
+            value = datetime.datetime.strftime(value, '%Y-%m-%d %H:%M')
         elif type(f) == DateField:
             # 字段类型是，DateFiled 使用自己的方式操作
             value = getattr(instance, key)
@@ -99,7 +105,6 @@ def model_to_dict2(instance, fields=None, exclude=None, replace=None, default=No
     return data
 
 
-
 def index(request):
     print('sdf',sys.argv)
     if request.user and request.user.username!='AnonymousUser':
@@ -109,14 +114,14 @@ def index(request):
 
 def user_action(request):
     action = request.GET.get('action', '')
-    if action == '':
-        return
     if action == 'login':
         return user_login(request)
-    if action == 'register':
+    elif action == 'register':
         return user_register(request)
-    if action == 'logout':
+    elif action == 'logout':
         return user_logout(request)
+    else:
+        return
 
 def user_login(request):
     if request.method == 'GET':
@@ -138,11 +143,15 @@ def user_register(request):
     info = ''
     if request.method == 'GET':
         return render(request, 'reg.html')
-
+    ALLOW_REGISTRATION = settings.ALLOW_REGISTRATION
     result = {
         'code':0,
         'msg':''
     }
+    if not ALLOW_REGISTRATION:
+        result['msg'] = '当前未开放注册，请联系管理员！'
+        return JsonResponse(result)
+
     username = request.POST.get('user', '')
     password1 = request.POST.get('pwd', '')
 
@@ -186,14 +195,15 @@ def get_single_info(uid):
     #print(peers)
     devices = RustDesDevice.objects.filter(rid__in=rids)
     devices = {x.rid:x for x in devices}
-
+    now = datetime.datetime.now()
     for rid, device in devices.items():
         peers[rid]['create_time'] = device.create_time.strftime('%Y-%m-%d')
-        peers[rid]['update_time'] = device.update_time.strftime('%Y-%m-%d')
+        peers[rid]['update_time'] = device.update_time.strftime('%Y-%m-%d %H:%M')
         peers[rid]['version'] = device.version
         peers[rid]['memory'] = device.memory
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
+        peers[rid]['status'] = '在线' if (now-device.update_time).seconds <=120 else '离线'
 
     for rid in peers.keys():
         peers[rid]['has_rhash'] = 'yes' if len(peers[rid]['rhash'])>1 else 'no'
@@ -204,26 +214,58 @@ def get_all_info():
     devices = RustDesDevice.objects.all()
     peers = RustDeskPeer.objects.all()
     devices = {x.rid:model_to_dict2(x) for x in devices}
+    now = datetime.datetime.now()
     for peer in peers:
         user = UserProfile.objects.filter(Q(id=peer.uid)).first()
         device = devices.get(peer.rid, None)
         if device:
             devices[peer.rid]['rust_user'] = user.username
+    
+    for k, v in devices.items():
+        devices[k]['status'] = '在线' if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else '离线'
     return [v for k,v in devices.items()]
 
 @login_required(login_url='/api/user_action?action=login')
 def work(request):
-
     username = request.user
     u = UserProfile.objects.get(username=username)
-    single_info = get_single_info(u.id)
+    
+    show_type = request.GET.get('show_type', '')
+    show_all = True if show_type == 'admin' and u.is_admin else False
+    paginator = Paginator(get_all_info(), 15) if show_type == 'admin' and u.is_admin else Paginator(get_single_info(u.id), 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj})
 
+@login_required(login_url='/api/user_action?action=login')
+def down_peers(request):
+    username = request.user
+    u = UserProfile.objects.get(username=username)
+
+    if not u.is_admin:
+        print(u.is_admin)
+        return HttpResponseRedirect('/api/work')
+    
     all_info = get_all_info()
-    print(all_info)
+    f = xlwt.Workbook(encoding='utf-8')
+    sheet1 = f.add_sheet(u'设备信息表', cell_overwrite_ok=True)
+    all_fields = [x.name for x in RustDesDevice._meta.get_fields()]
+    all_fields.append('rust_user')
+    for i, one in enumerate(all_info):
+        for j, name in enumerate(all_fields):
+            if i == 0:
+                # 写入列名
+                sheet1.write(i, j, name)
+            sheet1.write(i+1, j, one.get(name, '-'))
 
-    return render(request, 'show_work.html', {'single_info':single_info, 'all_info':all_info, 'u':u})
-
-
+    sio = BytesIO()
+    f.save(sio)
+    sio.seek(0)
+    response = HttpResponse(sio.getvalue(), content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=DeviceInfo.xls'
+    response.write(sio.getvalue())
+    return response
+    
 def check_sharelink_expired(sharelink):
     now = datetime.datetime.now()
     if sharelink.create_time > now:
