@@ -32,7 +32,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = 'api.UserProfile'      #AppName.自定义user
 
-ALLOW_REGISTRATION = os.environ.get("ALLOW_REGISTRATION", True)               # 是否允许注册, True为允许，False为不允许
+ALLOW_REGISTRATION = os.environ.get("ALLOW_REGISTRATION", "True") or os.environ.get("ALLOW_REGISTRATION", "True") == "True"               # 是否允许注册, True为允许，False为不允许
 
 #==========数据库配置 开始=====================
 DATABASE_TYPE = os.environ.get("DATABASE_TYPE", 'SQLITE')
@@ -43,6 +43,7 @@ MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD", '-')
 MYSQL_PORT = os.environ.get("MYSQL_PORT", '3306')
 #==========数据库配置 结束=====================
 
+LANGUAGE_CODE = os.environ.get("MYSQL_PORT", 'zh-hans')
 
 # Application definition
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',   # 取消post的验证。
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,7 +101,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db/db.sqlite3',
     }
 }
-if DATABASE_TYPE == 'MYSQL' and MYSQL_DBNAME!='-' and USER!= '-' and PASSWORD!='-':
+if DATABASE_TYPE == 'MYSQL' and MYSQL_DBNAME!='-' and MYSQL_USER!= '-' and MYSQL_PASSWORD!='-':
     # 简单通过数据库名、账密信息过滤下，防止用户未配置mysql却使用mysql
     DATABASES = {
     'default': {
@@ -135,8 +137,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Chicago'
+#LANGUAGE_CODE = 'zh-hans'
+
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -158,3 +161,13 @@ else:
 
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')     # 新增
+
+LANGUAGES = (
+    ('zh-hans', '中文简体'),
+    ('en', 'English'),
+ 
+)
+ 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
