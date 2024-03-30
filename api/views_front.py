@@ -204,10 +204,10 @@ def get_single_info(uid):
         peers[rid]['memory'] = device.memory
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
-        peers[rid]['status'] = _('在线') if (now-device.update_time).seconds <=120 else _('离线')
+        peers[rid]['status'] = _('Online') if (now-device.update_time).seconds <=120 else _('Offline')
 
     for rid in peers.keys():
-        peers[rid]['has_rhash'] = _('是') if len(peers[rid]['rhash'])>1 else _('否')
+        peers[rid]['has_rhash'] = _('yes') if len(peers[rid]['rhash'])>1 else _('no')
 
     return [v for k,v in peers.items()]
 
@@ -223,8 +223,8 @@ def get_all_info():
             devices[peer.rid]['rust_user'] = user.username
     
     for k, v in devices.items():
-        devices[k]['status'] = _('在线') if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else _('离线')
-    return [v for k,v in devices.items()]
+        devices[k]['status'] = _('Online') if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else _('Offline')
+    return [v for k,v in sorted(devices.items(), key=lambda item: item['status'])]
 
 @login_required(login_url='/api/user_action?action=login')
 def work(request):
