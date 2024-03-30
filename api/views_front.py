@@ -224,7 +224,7 @@ def get_all_info():
     
     for k, v in devices.items():
         devices[k]['status'] = _('Online') if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else _('X')
-    sorted_devices = sorted(devices.items(), key=custom_sort)
+    sorted_devices = sorted(devices.items(), key=custom_sort, reverse=True)
     new_ordered_dict = {}
     for key, device in sorted_devices:
         new_ordered_dict[key] = device
