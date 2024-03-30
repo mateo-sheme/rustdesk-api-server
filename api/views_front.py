@@ -224,7 +224,18 @@ def get_all_info():
     
     for k, v in devices.items():
         devices[k]['status'] = _('Online') if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else _('Offline')
-    return [v for k,v in sorted(devices.items(), key=lambda item: item['status'])]
+    sorted_devices = sorted(devices.items(), key=custom_sort)
+    new_ordered_dict = {}
+    for key, device in sorted_devices:
+        new_ordered_dict[key] = device
+    return [v for k,v in new_ordered_dict.items()]
+
+def custom_sort(item):
+    status = item[1]['status']
+    if status == 'Online':
+        return 1
+    else:
+        return 0
 
 @login_required(login_url='/api/user_action?action=login')
 def work(request):
