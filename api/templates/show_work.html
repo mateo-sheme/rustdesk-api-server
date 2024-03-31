@@ -9,7 +9,7 @@
     {% if not show_all %}
     <div class="layui-col-md15">
       <div class="layui-card">
-        <div class="layui-card-header">{{ online_count }}/{{page_obj.paginator.count }}: {{ "设备统计" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】</div>
+        <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "设备统计" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】</div>
         <div class="layui-card-body">
           <table class="layui-table sortable">
             <thead>
@@ -75,7 +75,7 @@
     {% if u.is_admin and show_all %}
     <div class="layui-col-md15">
       <div class="layui-card">
-        <div class="layui-card-header">{{ online_count }}/{{page_obj.paginator.count }}: {{ "全部用户" | translate }} &raquo;
+        <div class="layui-card-header">{{ online_count_all }}/{{page_obj.paginator.count }}: {{ "全部用户" | translate }} &raquo;
           <div class="layui-btn" ><a href="/api/down_peers">{{ "导出xlsx" | translate }}</a></div>
         </div>
         <div class="layui-card-body">

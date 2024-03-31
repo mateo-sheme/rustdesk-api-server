@@ -263,12 +263,12 @@ def work(request):
     
     show_type = request.GET.get('show_type', '')
     show_all = True if show_type == 'admin' and u.is_admin else False
-    all_info, online_count = get_all_info()
-    single_info, online_count = get_single_info(u.id)
+    all_info, online_count_all = get_all_info()
+    single_info, online_count_single = get_single_info(u.id)
     paginator = Paginator(all_info, 100) if show_type == 'admin' and u.is_admin else Paginator(single_info, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count':online_count})
+    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count_single':online_count_single, 'online_count_all':online_count_all})
 
 @login_required(login_url='/api/user_action?action=login')
 def down_peers(request):
