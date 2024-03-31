@@ -32,7 +32,7 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
-                <td>{{one.rid}} </td>
+                <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.version}}</td>
                 <td>{{one.has_rhash}}</td>
                 <td>{{one.username}}</td>
@@ -99,7 +99,7 @@
 
               {% for one in page_obj %}
               <tr>
-                <td>{{one.rid}} </td>
+                <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.rust_user}} </td>
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
