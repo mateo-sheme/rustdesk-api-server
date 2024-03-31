@@ -196,6 +196,11 @@ def get_single_info(uid):
     #print(peers)
     devices = RustDesDevice.objects.filter(rid__in=rids)
     devices = {x.rid:x for x in devices}
+
+    for rid in peers.keys():
+        peers[rid]['has_rhash'] = _('yes') if len(peers[rid]['rhash'])>1 else _('no')
+        peers[rid]['status'] = _('X')
+
     now = datetime.datetime.now()
     for rid, device in devices.items():
         peers[rid]['create_time'] = device.create_time.strftime('%Y-%m-%d')
@@ -205,9 +210,6 @@ def get_single_info(uid):
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
         peers[rid]['status'] = _('Online') if (now-device.update_time).seconds <=120 else _('X')
-
-    for rid in peers.keys():
-        peers[rid]['has_rhash'] = _('yes') if len(peers[rid]['rhash'])>1 else _('no')
 
     return [v for k,v in peers.items()]
 
