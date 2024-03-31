@@ -191,6 +191,7 @@ def user_logout(request):
     return HttpResponseRedirect('/api/user_action?action=login')
         
 def get_single_info(uid):
+    online_count = 0
     peers = RustDeskPeer.objects.filter(Q(uid=uid))
     rids = [x.rid for x in peers]
     peers = {x.rid:model_to_dict(x) for x in peers}
@@ -214,11 +215,12 @@ def get_single_info(uid):
             peers[rid]['status'] = _('Online') 
             online_count += 1
         else:
-            _('X')
+            peers[rid]['status'] = _('X')
 
     return [v for k,v in peers.items()]
 
 def get_all_info():
+    online_count = 0
     devices = RustDesDevice.objects.all()
     peers = RustDeskPeer.objects.all()
     devices = {x.rid:model_to_dict2(x) for x in devices}
@@ -230,7 +232,12 @@ def get_all_info():
             devices[peer.rid]['rust_user'] = user.username
     
     for k, v in devices.items():
-        devices[k]['status'] = _('Online') if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120 else _('X')
+        if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120:
+            devices[k]['status'] = _('Online')  
+            online_count += 1
+        else: 
+           devices[k]['status'] = _('X')
+
     sorted_devices = sorted(devices.items(), key=custom_sort, reverse=True)
     new_ordered_dict = {}
     for key, device in sorted_devices:
