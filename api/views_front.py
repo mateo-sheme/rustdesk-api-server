@@ -27,6 +27,7 @@ from django.utils.translation import gettext as _
 
 salt = 'xiaomo'
 EFFECTIVE_SECONDS = 7200
+online_count = 0
 
 def getStrMd5(s):
     if not isinstance(s, (str,)):
@@ -209,7 +210,11 @@ def get_single_info(uid):
         peers[rid]['memory'] = device.memory
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
-        peers[rid]['status'] = _('Online') if (now-device.update_time).seconds <=120 else _('X')
+        if (now-device.update_time).seconds <=120:
+            peers[rid]['status'] = _('Online') 
+            online_count += 1
+        else:
+            _('X')
 
     return [v for k,v in peers.items()]
 
@@ -249,7 +254,7 @@ def work(request):
     paginator = Paginator(get_all_info(), 100) if show_type == 'admin' and u.is_admin else Paginator(get_single_info(u.id), 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj})
+    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count':online_count})
 
 @login_required(login_url='/api/user_action?action=login')
 def down_peers(request):
