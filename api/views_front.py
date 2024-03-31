@@ -244,7 +244,7 @@ def work(request):
     
     show_type = request.GET.get('show_type', '')
     show_all = True if show_type == 'admin' and u.is_admin else False
-    paginator = Paginator(get_all_info(), 15) if show_type == 'admin' and u.is_admin else Paginator(get_single_info(u.id), 15)
+    paginator = Paginator(get_all_info(), 100) if show_type == 'admin' and u.is_admin else Paginator(get_single_info(u.id), 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj})
