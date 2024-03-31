@@ -15,36 +15,36 @@
             <thead>
               <tr>
                 <th>{{ "客户端ID" | translate }}</th>
+                <th>{{ "状态" | translate }}</th>
+                <th>{{ "别名" | translate }}</th>
                 <th>{{ "版本" | translate }}</th>
                 <th>{{ "连接密码" | translate }}</th>
                 <th>{{ "系统用户名" | translate }}</th>
                 <th>{{ "计算机名" | translate }}</th>
-                <th>{{ "别名" | translate }}</th>
                 <th>{{ "平台" | translate }}</th>
                 <th>{{ "系统" | translate }}</th>
                 <th>{{ "CPU" | translate }}</th>
                 <th>{{ "内存" | translate }}</th>
                 <th>{{ "注册时间" | translate }}</th>
                 <th>{{ "更新时间" | translate }}</th>
-                <th>{{ "状态" | translate }}</th>
               </tr>
             </thead>
             <tbody>
               {% for one in page_obj %}
               <tr>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
+                <td>{{one.status}} </td>
+                <td>{{one.alias}}</td>
                 <td>{{one.version}}</td>
                 <td>{{one.has_rhash}}</td>
                 <td>{{one.username}}</td>
                 <td>{{one.hostname}}</td>
-                <td>{{one.alias}}</td>
                 <td>{{one.platform}}</td>
                 <td>{{one.os}}</td>
                 <td>{{one.cpu}}</td>
                 <td>{{one.memory}}</td>
                 <td>{{one.create_time}}</td>
                 <td>{{one.update_time}}</td>
-                <td>{{one.status}} </td>
               </tr>
               {% endfor %}
             </tbody>
