@@ -27,7 +27,6 @@ from django.utils.translation import gettext as _
 
 salt = 'xiaomo'
 EFFECTIVE_SECONDS = 7200
-online_count = 0
 
 def getStrMd5(s):
     if not isinstance(s, (str,)):
@@ -212,12 +211,12 @@ def get_single_info(uid):
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
         if (now-device.update_time).seconds <=120:
-            peers[rid]['status'] = _('Online') 
+            peers[rid]['status'] = _('Online')
             online_count += 1
         else:
             peers[rid]['status'] = _('X')
 
-    return [v for k,v in peers.items()]
+    return ([v for k,v in peers.items()], online_count)
 
 def get_all_info():
     online_count = 0
@@ -233,7 +232,7 @@ def get_all_info():
     
     for k, v in devices.items():
         if (now-datetime.datetime.strptime(v['update_time'], '%Y-%m-%d %H:%M')).seconds <=120:
-            devices[k]['status'] = _('Online')  
+            devices[k]['status'] = _('Online')
             online_count += 1
         else: 
            devices[k]['status'] = _('X')
@@ -242,7 +241,7 @@ def get_all_info():
     new_ordered_dict = {}
     for key, device in sorted_devices:
         new_ordered_dict[key] = device
-    return [v for k,v in new_ordered_dict.items()]
+    return ([v for k,v in new_ordered_dict.items()], online_count)
 
 def custom_sort(item):
     status = item[1]['status']
@@ -258,7 +257,9 @@ def work(request):
     
     show_type = request.GET.get('show_type', '')
     show_all = True if show_type == 'admin' and u.is_admin else False
-    paginator = Paginator(get_all_info(), 100) if show_type == 'admin' and u.is_admin else Paginator(get_single_info(u.id), 100)
+    all_info, online_count = get_all_info()
+    single_info, online_count = get_single_info(u.id)
+    paginator = Paginator(all_info, 100) if show_type == 'admin' and u.is_admin else Paginator(single_info, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count':online_count})
