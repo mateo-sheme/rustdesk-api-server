@@ -204,7 +204,7 @@ def get_single_info(uid):
         peers[rid]['memory'] = device.memory
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
-        peers[rid]['status'] = _('Online') if (now-device.update_time).seconds <=120 else _('Offline')
+        peers[rid]['status'] = _('Online') if (now-device.update_time).seconds <=120 else _('X')
 
     for rid in peers.keys():
         peers[rid]['has_rhash'] = _('yes') if len(peers[rid]['rhash'])>1 else _('no')
