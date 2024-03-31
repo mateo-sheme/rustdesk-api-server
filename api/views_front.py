@@ -216,7 +216,13 @@ def get_single_info(uid):
         else:
             peers[rid]['status'] = _('X')
 
-    return ([v for k,v in peers.items()], online_count)
+    sorted_peers = sorted(peers.items(), key=custom_sort, reverse=True)
+    new_ordered_dict = {}
+    for key, peer in sorted_peers:
+        new_ordered_dict[key] = peer
+
+    #return ([v for k,v in peers.items()], online_count)
+    return ([v for k,v in new_ordered_dict.items()], online_count)
 
 def get_all_info():
     online_count = 0
