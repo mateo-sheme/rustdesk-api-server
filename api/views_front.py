@@ -259,7 +259,13 @@ def custom_sort(item):
 def get_conn_log():
     logs = log.objects.using('log')
     logs = {x.from_ip:model_to_dict(x) for x in logs}
-    return [v for k, v in logs.items()]
+
+    sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)
+    new_ordered_dict = {}
+    for key, log in sorted_logs:
+        new_ordered_dict[key] = log
+
+    return [v for k, v in new_ordered_dict.items()]
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
