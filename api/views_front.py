@@ -259,6 +259,11 @@ def custom_sort(item):
 def get_conn_log():
     logs = log.objects.using('log')
     logs = {x.from_ip:model_to_dict(x) for x in logs}
+    
+    for k, v in logs.items():
+        peer = RustDeskPeer.objects.get(rid=v['to_id'])
+        if peer:
+            logs[k]['alias'] = peer.alias
 
     sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)
     new_ordered_dict = {}
