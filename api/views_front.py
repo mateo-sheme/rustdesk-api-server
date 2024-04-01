@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink
+from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink, log
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -255,6 +255,18 @@ def custom_sort(item):
         return 1
     else:
         return 0
+    
+def get_conn_log():
+    logs = log.objects.using('log')
+    logs = {x.from_ip:model_to_dict(x) for x in logs}
+    return [v for k, v in logs.items()]
+
+@login_required(login_url='/api/user_action?action=login')
+def conn_log(request):
+    paginator = Paginator(get_conn_log(), 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'show_conn_log.html', {'page_obj':page_obj})
 
 @login_required(login_url='/api/user_action?action=login')
 def work(request):

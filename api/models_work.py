@@ -18,6 +18,11 @@ class RustDeskToken(models.Model):
         verbose_name = "Token"
         verbose_name_plural = _("Token列表") 
 
+class log(models.Model):
+    from_ip = models.CharField(verbose_name=_('From IP'), max_length=30)
+    to_id = models.CharField(verbose_name=_('To ID'), max_length=20)
+    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=25)
+
 class RustDeskTokenAdmin(admin.ModelAdmin):
     list_display = ('username', 'uid')
     search_fields = ('username', 'uid')
