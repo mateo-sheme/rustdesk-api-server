@@ -262,8 +262,8 @@ def get_conn_log():
 
     sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)
     new_ordered_dict = {}
-    for key, log in sorted_logs:
-        new_ordered_dict[key] = log
+    for key, alog in sorted_logs:
+        new_ordered_dict[key] = alog
 
     return [v for k, v in new_ordered_dict.items()]
 
