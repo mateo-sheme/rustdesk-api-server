@@ -20,6 +20,7 @@ import json
 import time
 import hashlib
 import sys
+from dateutil import tz
 
 from io import BytesIO
 import xlwt
@@ -266,6 +267,11 @@ def get_conn_log():
             logs[k]['alias'] = peer.alias
         except:
             logs[k]['alias'] = 'UNKNOWN'
+        from_zone = tz.tzutc()
+        to_zone = tz.tzlocal()
+        utc = logs[k]['logged_at']
+        utc = utc.replace(tzinfo=from_zone)
+        logs[k]['logged_at'] = utc.astimezone(to_zone)
     #logs = {x.from_ip:model_to_dict(x) for x in logs}
 
     sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)

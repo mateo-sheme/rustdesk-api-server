@@ -24,7 +24,10 @@
               <tr>
                 <td>{{one.from_ip}} </td>
                 <td>{{one.to_id}}</td>
+                {% load tz %}
+                {% timezone "America/Chicago" %}      
                 <td>{{one.logged_at}}</td>
+                {% endtimezone %}
                 <td>{{one.alias}}</td>
               </tr>
               {% endfor %}
