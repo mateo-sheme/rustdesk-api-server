@@ -259,7 +259,7 @@ def custom_sort(item):
     
 def get_conn_log():
     logs = log.objects.using('log')
-    logs = {x.from_ip:model_to_dict(x) for x in logs}
+    logs = {x.id:model_to_dict(x) for x in logs}
     
     for k, v in logs.items():
         try:
