@@ -211,6 +211,7 @@ def get_single_info(uid):
         peers[rid]['memory'] = device.memory
         peers[rid]['cpu'] = device.cpu
         peers[rid]['os'] = device.os
+        peers[rid]['ip'] = device.ip
         if (now-device.update_time).seconds <=120:
             peers[rid]['status'] = _('Online')
             online_count += 1

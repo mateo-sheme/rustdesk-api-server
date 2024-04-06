@@ -64,6 +64,7 @@ class RustDeskPeer(models.Model):
     platform = models.CharField(verbose_name=_('平台'), max_length=30)
     tags = models.CharField(verbose_name=_('标签'), max_length=30)
     rhash = models.CharField(verbose_name=_('设备链接密码'), max_length=60)
+    ip = models.CharField(verbose_name=_('IP Address'), max_length=16, default="")
     
     class Meta:
         ordering = ('-username',)
@@ -72,7 +73,7 @@ class RustDeskPeer(models.Model):
         
 
 class RustDeskPeerAdmin(admin.ModelAdmin):
-    list_display = ('rid', 'uid', 'username', 'hostname', 'platform', 'alias', 'tags')
+    list_display = ('rid', 'uid', 'username', 'hostname', 'platform', 'alias', 'tags', 'ip')
     search_fields = ('deviceid', 'alias')
     list_filter = ('rid', 'uid', )
     
@@ -88,6 +89,7 @@ class RustDesDevice(models.Model):
     version = models.CharField(verbose_name=_('客户端版本'), max_length=100)
     create_time = models.DateTimeField(verbose_name=_('设备注册时间'), auto_now_add=True)
     update_time = models.DateTimeField(verbose_name=('设备更新时间'), auto_now=True, blank=True)
+    ip = models.CharField(verbose_name=_('IP Address'), max_length=16, default="")
     
     class Meta:
         ordering = ('-rid',)
@@ -95,7 +97,7 @@ class RustDesDevice(models.Model):
         verbose_name_plural = _("设备列表" )
     
 class RustDesDeviceAdmin(admin.ModelAdmin):
-    list_display = ('rid', 'hostname', 'memory', 'uuid', 'version', 'create_time', 'update_time')
+    list_display = ('rid', 'hostname', 'memory', 'uuid', 'version', 'create_time', 'update_time', 'ip')
     search_fields = ('hostname', 'memory')
     list_filter = ('rid', )
 

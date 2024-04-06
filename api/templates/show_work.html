@@ -27,6 +27,7 @@
                 <th>{{ "内存" | translate }}</th>
                 <th>{{ "注册时间" | translate }}</th>
                 <th>{{ "更新时间" | translate }}</th>
+                <th>{{ "IP Address" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +46,7 @@
                 <td>{{one.memory}}</td>
                 <td>{{one.create_time}}</td>
                 <td>{{one.update_time}}</td>
+                <td>{{one.ip}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -93,6 +95,7 @@
                 <th>{{ "注册日期" | translate }}</th>
                 <th>{{ "更新时间" | translate }}</th>
                 <th>{{ "状态" | translate }}</th>
+                <th>{{ "IP Address" | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -110,6 +113,7 @@
                 <td>{{one.create_time}} </td>
                 <td>{{one.update_time}} </td>
                 <td>{{one.status}} </td>
+                <td>{{one.ip}}</td>
               </tr>
               {% endfor %}
             </tbody>
