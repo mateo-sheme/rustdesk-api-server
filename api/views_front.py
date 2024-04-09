@@ -288,12 +288,12 @@ def get_file_log():
     for k, v in logs.items():
         try:
             peer_remote = RustDeskPeer.objects.get(rid=v['remote_id'])
-            logs[k]['remote_alias'] = peer_remote
+            logs[k]['remote_alias'] = peer_remote.alias
         except:
             logs[k]['remote_alias'] = 'UNKNOWN'
         try:
             peer_user = RustDeskPeer.objects.get(rid=v['user_id'])
-            logs[k]['user_alias'] = peer_user
+            logs[k]['user_alias'] = peer_user.alias
         except:
             logs[k]['user_alias'] = 'UNKNOWN'
 
