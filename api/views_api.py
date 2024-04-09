@@ -6,7 +6,7 @@ import datetime
 import hashlib
 from django.contrib import auth
 from django.forms.models import model_to_dict
-from api.models import RustDeskToken, UserProfile, RustDeskTag, RustDeskPeer, RustDesDevice
+from api.models import RustDeskToken, UserProfile, RustDeskTag, RustDeskPeer, RustDesDevice, ConnLog
 from django.db.models import Q
 import copy
 from .views_front import *
@@ -256,6 +256,27 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def audit(request):
+    postdata = json.loads(request.body)
+    #print(postdata)
+    audit_type = postdata['action'] if 'action' in postdata else ''
+    if audit_type == 'new' or audit_type == 'close':
+        new_log = ConnLog(
+            action=postdata['action'] if 'action' in postdata else '',
+            conn_id=postdata['conn_id'] if 'conn_id' in postdata else 0,
+            from_ip=postdata['ip'] if 'ip' in postdata else '',
+            rid=postdata['id'] if 'id' in postdata else '',
+            logged_at=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
+            session_id=postdata['session_id'] if 'session_id' in postdata else 0,
+            uuid=postdata['uuid'] if 'uuid' in postdata else '',
+        )
+        new_log.save()
+    result = {
+    'code':1,
+    'data':'ok'
+    }
+    return JsonResponse(result)
     
 def users(request):
     result = {

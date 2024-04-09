@@ -13,6 +13,7 @@
           <table class="layui-table sortable">
             <thead>
               <tr>
+                <th>Action</th>
                 <th>From IP</th>
                 <th>To ID</th>
                 <th>Logged At</th>
@@ -22,12 +23,10 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
+                <td>{{one.action}}</td>
                 <td>{{one.from_ip}} </td>
-                <td>{{one.to_id}}</td>
-                {% load tz %}
-                {% timezone "America/Chicago" %}      
+                <td>{{one.rid}}</td>   
                 <td>{{one.logged_at}}</td>
-                {% endtimezone %}
                 <td>{{one.alias}}</td>
               </tr>
               {% endfor %}

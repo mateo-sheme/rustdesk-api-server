@@ -18,16 +18,20 @@ class RustDeskToken(models.Model):
         verbose_name = "Token"
         verbose_name_plural = _("Token列表") 
 
-class log(models.Model):
+class ConnLog(models.Model):
     id = models.IntegerField(verbose_name=_('ID'),primary_key=True)
-    from_ip = models.CharField(verbose_name=_('From IP'), max_length=30)
-    to_id = models.CharField(verbose_name=_('To ID'), max_length=20)
-    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=25)
+    action = models.CharField(verbose_name=_('Action'), max_length=20, null=True)
+    conn_id = models.CharField(verbose_name=_('Connection ID'), max_length=10, null=True)
+    from_ip = models.CharField(verbose_name=_('From IP'), max_length=30, null=True)
+    rid = models.CharField(verbose_name=_('To ID'), max_length=20, null=True)
+    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=25, null=True)
+    session_id = models.CharField(verbose_name=_('Session ID'), max_length=60, null=True)
+    uuid = models.CharField(verbose_name=_('uuid'), max_length=60, null=True)
 
-#class logAdmin(admin.ModelAdmin):
-#    list_display = ('id', 'from_ip', 'to_id', 'logged_at')
-#    search_fields = ('from_ip', 'to_id')
-#    list_filter = ('id', 'from_ip', 'to_id', 'logged_at')
+class ConnLogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'action', 'conn_id', 'from_ip', 'rid', 'logged_at', 'session_id', 'uuid')
+    search_fields = ('from_ip', 'rid')
+    list_filter = ('id', 'from_ip', 'rid', 'logged_at')
 
 class RustDeskTokenAdmin(admin.ModelAdmin):
     list_display = ('username', 'uid')

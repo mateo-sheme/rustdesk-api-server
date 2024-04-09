@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink, log
+from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink, ConnLog
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -259,21 +259,20 @@ def custom_sort(item):
         return 0
     
 def get_conn_log():
-    logs = log.objects.using('log')
+    logs = ConnLog.objects.all()
     logs = {x.id:model_to_dict(x) for x in logs}
     
     for k, v in logs.items():
         try:
-            peer = RustDeskPeer.objects.get(rid=v['to_id'])
+            peer = RustDeskPeer.objects.get(rid=v['rid'])
             logs[k]['alias'] = peer.alias
         except:
             logs[k]['alias'] = 'UNKNOWN'
-        from_zone = tz.tzutc()
-        to_zone = tz.tzlocal()
-        utc = logs[k]['logged_at']
-        utc = utc.replace(tzinfo=from_zone)
-        logs[k]['logged_at'] = utc.astimezone(to_zone)
-    #logs = {x.from_ip:model_to_dict(x) for x in logs}
+        #from_zone = tz.tzutc()
+        #to_zone = tz.tzlocal()
+        #utc = logs[k]['logged_at']
+        #utc = utc.replace(tzinfo=from_zone)
+        #logs[k]['logged_at'] = utc.astimezone(to_zone)
 
     sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)
     new_ordered_dict = {}

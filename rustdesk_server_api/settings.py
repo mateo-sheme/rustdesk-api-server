@@ -100,11 +100,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db/db.sqlite3',
     },
-    'log': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': '/opt/rustdesk/db_v2.sqlite3'
-        'NAME': BASE_DIR.parent / 'db_v2.sqlite3'
-    }
 }
 if DATABASE_TYPE == 'MYSQL' and MYSQL_DBNAME!='-' and MYSQL_USER!= '-' and MYSQL_PASSWORD!='-':
     # 简单通过数据库名、账密信息过滤下，防止用户未配置mysql却使用mysql
