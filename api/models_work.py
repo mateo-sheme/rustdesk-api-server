@@ -24,7 +24,7 @@ class ConnLog(models.Model):
     conn_id = models.CharField(verbose_name=_('Connection ID'), max_length=10, null=True)
     from_ip = models.CharField(verbose_name=_('From IP'), max_length=30, null=True)
     rid = models.CharField(verbose_name=_('To ID'), max_length=20, null=True)
-    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=25, null=True)
+    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=35, null=True)
     session_id = models.CharField(verbose_name=_('Session ID'), max_length=60, null=True)
     uuid = models.CharField(verbose_name=_('uuid'), max_length=60, null=True)
 
@@ -32,6 +32,21 @@ class ConnLogAdmin(admin.ModelAdmin):
     list_display = ('id', 'action', 'conn_id', 'from_ip', 'rid', 'logged_at', 'session_id', 'uuid')
     search_fields = ('from_ip', 'rid')
     list_filter = ('id', 'from_ip', 'rid', 'logged_at')
+
+class FileLog(models.Model):
+    id = models.IntegerField(verbose_name=_('ID'),primary_key=True)
+    file = models.CharField(verbose_name=_('Path'), max_length=500)
+    remote_id = models.CharField(verbose_name=_('Remote ID'), max_length=20, default='0')
+    user_id = models.CharField(verbose_name=_('User ID'), max_length=20, default='0')
+    user_ip = models.CharField(verbose_name=_('User IP'), max_length=20, default='0')
+    filesize = models.CharField(verbose_name=_('Filesize'), max_length=500, default='')
+    direction = models.IntegerField(verbose_name=_('Direction'), default=0)
+    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=35, null=True)
+
+class FileLogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'file', 'remote_id', 'user_id', 'user_ip', 'filesize', 'direction', 'logged_at')
+    search_fields = ('file', 'remote_id', 'user_id', 'user_ip')
+    list_filter = ('id', 'file', 'remote_id', 'user_id', 'user_ip', 'filesize', 'direction', 'logged_at')
 
 class RustDeskTokenAdmin(admin.ModelAdmin):
     list_display = ('username', 'uid')

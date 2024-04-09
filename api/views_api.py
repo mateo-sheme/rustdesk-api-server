@@ -4,9 +4,10 @@ import json
 import time
 import datetime
 import hashlib
+import math
 from django.contrib import auth
 from django.forms.models import model_to_dict
-from api.models import RustDeskToken, UserProfile, RustDeskTag, RustDeskPeer, RustDesDevice, ConnLog
+from api.models import RustDeskToken, UserProfile, RustDeskTag, RustDeskPeer, RustDesDevice, ConnLog, FileLog
 from django.db.models import Q
 import copy
 from .views_front import *
@@ -257,12 +258,22 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+def convert_filesize(size_bytes):
+    if size_bytes == 0:
+        return "0B"
+    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+    i = int(math.floor(math.log(size_bytes, 1024)))
+    p = math.pow(1024, i)
+    s = round(size_bytes / p, 2)
+    return "%s %s" % (s, size_name[i])
+
+
 def audit(request):
     postdata = json.loads(request.body)
     #print(postdata)
     audit_type = postdata['action'] if 'action' in postdata else ''
     if audit_type == 'new' or audit_type == 'close':
-        new_log = ConnLog(
+        new_conn_log = ConnLog(
             action=postdata['action'] if 'action' in postdata else '',
             conn_id=postdata['conn_id'] if 'conn_id' in postdata else 0,
             from_ip=postdata['ip'] if 'ip' in postdata else '',
@@ -271,7 +282,22 @@ def audit(request):
             session_id=postdata['session_id'] if 'session_id' in postdata else 0,
             uuid=postdata['uuid'] if 'uuid' in postdata else '',
         )
-        new_log.save()
+        new_conn_log.save()
+    elif 'is_file' in postdata:
+        print(postdata)
+        files = json.loads(postdata['info'])['files']
+        filesize = convert_filesize(int(files[0][1]))
+        new_file_log = FileLog(
+            file=postdata['path'],
+            user_id=postdata['peer_id'],
+            user_ip=json.loads(postdata['info'])['ip'],
+            remote_id=postdata['id'],
+            filesize=filesize,
+            direction=postdata['type'],
+            logged_at=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
+        )
+        new_file_log.save()
+
     result = {
     'code':1,
     'data':'ok'
