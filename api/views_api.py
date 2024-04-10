@@ -278,13 +278,13 @@ def audit(request):
             conn_id=postdata['conn_id'] if 'conn_id' in postdata else 0,
             from_ip=postdata['ip'] if 'ip' in postdata else '',
             rid=postdata['id'] if 'id' in postdata else '',
-            conn_start=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
+            conn_start=datetime.datetime.now(),
             session_id=postdata['session_id'] if 'session_id' in postdata else 0,
             uuid=postdata['uuid'] if 'uuid' in postdata else '',
         )
         new_conn_log.save()
     elif audit_type =="close":
-        ConnLog.objects.filter(Q(conn_id=postdata['conn_id'])).update(conn_end=datetime.datetime.now()+datetime.timedelta(seconds=EFFECTIVE_SECONDS))
+        ConnLog.objects.filter(Q(conn_id=postdata['conn_id'])).update(conn_end=datetime.datetime.now())
     elif 'is_file' in postdata:
         print(postdata)
         files = json.loads(postdata['info'])['files']
@@ -296,7 +296,7 @@ def audit(request):
             remote_id=postdata['id'],
             filesize=filesize,
             direction=postdata['type'],
-            logged_at=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
+            logged_at=datetime.datetime.now(),
         )
         new_file_log.save()
 
