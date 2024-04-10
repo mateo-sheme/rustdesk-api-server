@@ -15,21 +15,21 @@
               <tr>
                 <th>From IP</th>
                 <th>To ID</th>
+                <th>Alias</th>
                 <th>Connection Start Time</th>
                 <th>Connection End Time</th>
                 <th>Duration (HH:MM:SS)</th>
-                <th>Alias</th>
               </tr>
             </thead>
             <tbody>
               {% for one in page_obj %}
               <tr>
                 <td>{{one.from_ip}} </td>
-                <td>{{one.rid}}</td>   
+                <td>{{one.rid}}</td>  
+                <td>{{one.alias}}</td> 
                 <td>{{one.conn_start}}</td>
                 <td>{{one.conn_end}}</td>
                 <td>{{one.duration}}</td>
-                <td>{{one.alias}}</td>
               </tr>
               {% endfor %}
             </tbody>
