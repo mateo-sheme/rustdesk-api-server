@@ -284,7 +284,7 @@ def audit(request):
         )
         new_conn_log.save()
     elif audit_type =="close":
-        ConnLog.objects.filter(Q(session_id=postdata['session_id'])).update(conn_end=datetime.datetime.now()+datetime.timedelta(seconds=EFFECTIVE_SECONDS))
+        ConnLog.objects.filter(Q(conn_id=postdata['conn_id'])).update(conn_end=datetime.datetime.now()+datetime.timedelta(seconds=EFFECTIVE_SECONDS))
     elif 'is_file' in postdata:
         print(postdata)
         files = json.loads(postdata['info'])['files']
