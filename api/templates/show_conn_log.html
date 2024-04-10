@@ -16,7 +16,8 @@
                 <th>Action</th>
                 <th>From IP</th>
                 <th>To ID</th>
-                <th>Logged At</th>
+                <th>Connection Start Time</th>
+                <th>Connection End Time</th>
                 <th>Alias</th>
               </tr>
             </thead>
@@ -26,7 +27,8 @@
                 <td>{{one.action}}</td>
                 <td>{{one.from_ip}} </td>
                 <td>{{one.rid}}</td>   
-                <td>{{one.logged_at}}</td>
+                <td>{{one.conn_start}}</td>
+                <td>{{one.conn_end}}</td>
                 <td>{{one.alias}}</td>
               </tr>
               {% endfor %}

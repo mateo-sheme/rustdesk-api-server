@@ -24,14 +24,15 @@ class ConnLog(models.Model):
     conn_id = models.CharField(verbose_name=_('Connection ID'), max_length=10, null=True)
     from_ip = models.CharField(verbose_name=_('From IP'), max_length=30, null=True)
     rid = models.CharField(verbose_name=_('To ID'), max_length=20, null=True)
-    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=35, null=True)
+    conn_start = models.CharField(verbose_name=_('Connected'), max_length=35, null=True, default="")
+    conn_end = models.CharField(verbose_name=_('Disconnected'), max_length=35, null=True, default="")
     session_id = models.CharField(verbose_name=_('Session ID'), max_length=60, null=True)
     uuid = models.CharField(verbose_name=_('uuid'), max_length=60, null=True)
 
 class ConnLogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'action', 'conn_id', 'from_ip', 'rid', 'logged_at', 'session_id', 'uuid')
+    list_display = ('id', 'action', 'conn_id', 'from_ip', 'rid', 'conn_start', 'conn_end', 'session_id', 'uuid')
     search_fields = ('from_ip', 'rid')
-    list_filter = ('id', 'from_ip', 'rid', 'logged_at')
+    list_filter = ('id', 'from_ip', 'rid', 'conn_start', 'conn_end')
 
 class FileLog(models.Model):
     id = models.IntegerField(verbose_name=_('ID'),primary_key=True)

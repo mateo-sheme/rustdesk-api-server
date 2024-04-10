@@ -272,17 +272,19 @@ def audit(request):
     postdata = json.loads(request.body)
     #print(postdata)
     audit_type = postdata['action'] if 'action' in postdata else ''
-    if audit_type == 'new' or audit_type == 'close':
+    if audit_type == 'new':
         new_conn_log = ConnLog(
             action=postdata['action'] if 'action' in postdata else '',
             conn_id=postdata['conn_id'] if 'conn_id' in postdata else 0,
             from_ip=postdata['ip'] if 'ip' in postdata else '',
             rid=postdata['id'] if 'id' in postdata else '',
-            logged_at=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
+            conn_start=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
             session_id=postdata['session_id'] if 'session_id' in postdata else 0,
             uuid=postdata['uuid'] if 'uuid' in postdata else '',
         )
         new_conn_log.save()
+    elif audit_type =="close":
+        ConnLog.objects.filter(Q(session_id=postdata['session_id'])).update(conn_end=datetime.datetime.now()+datetime.timedelta(seconds=EFFECTIVE_SECONDS))
     elif 'is_file' in postdata:
         print(postdata)
         files = json.loads(postdata['info'])['files']
