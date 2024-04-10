@@ -279,7 +279,6 @@ def audit(request):
             from_ip=postdata['ip'] if 'ip' in postdata else '',
             rid=postdata['id'] if 'id' in postdata else '',
             conn_start=datetime.datetime.now() + datetime.timedelta(seconds=EFFECTIVE_SECONDS),
-            conn_end='',
             session_id=postdata['session_id'] if 'session_id' in postdata else 0,
             uuid=postdata['uuid'] if 'uuid' in postdata else '',
         )

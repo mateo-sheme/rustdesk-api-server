@@ -24,8 +24,8 @@ class ConnLog(models.Model):
     conn_id = models.CharField(verbose_name=_('Connection ID'), max_length=10, null=True)
     from_ip = models.CharField(verbose_name=_('From IP'), max_length=30, null=True)
     rid = models.CharField(verbose_name=_('To ID'), max_length=20, null=True)
-    conn_start = models.CharField(verbose_name=_('Connected'), max_length=35, null=True, default="")
-    conn_end = models.CharField(verbose_name=_('Disconnected'), max_length=35, null=True, default="")
+    conn_start = models.DateTimeField(verbose_name=_('Connected'), null=True)
+    conn_end = models.DateTimeField(verbose_name=_('Disconnected'), null=True)
     session_id = models.CharField(verbose_name=_('Session ID'), max_length=60, null=True)
     uuid = models.CharField(verbose_name=_('uuid'), max_length=60, null=True)
 
@@ -42,7 +42,7 @@ class FileLog(models.Model):
     user_ip = models.CharField(verbose_name=_('User IP'), max_length=20, default='0')
     filesize = models.CharField(verbose_name=_('Filesize'), max_length=500, default='')
     direction = models.IntegerField(verbose_name=_('Direction'), default=0)
-    logged_at = models.CharField(verbose_name=_('Logged At'), max_length=35, null=True)
+    logged_at = models.DateTimeField(verbose_name=_('Logged At'), null=True)
 
 class FileLogAdmin(admin.ModelAdmin):
     list_display = ('id', 'file', 'remote_id', 'user_id', 'user_ip', 'filesize', 'direction', 'logged_at')

@@ -273,8 +273,16 @@ def get_conn_log():
         #utc = logs[k]['logged_at']
         #utc = utc.replace(tzinfo=from_zone)
         #logs[k]['logged_at'] = utc.astimezone(to_zone)
+        duration = round((logs[k]['conn_end'] - logs[k]['conn_start']).total_seconds())
+        m, s = divmod(duration, 60)
+        h, m = divmod(m, 60)
+        #d, h = divmod(h, 24)
+        try:
+            logs[k]['duration'] = f'{h:02d}:{m:02d}:{s:02d}'
+        except:
+            logs[k]['duration'] = -1
 
-    sorted_logs = sorted(logs.items(), key=lambda x: x[1]['logged_at'], reverse=True)
+    sorted_logs = sorted(logs.items(), key=lambda x: x[1]['conn_start'], reverse=True)
     new_ordered_dict = {}
     for key, alog in sorted_logs:
         new_ordered_dict[key] = alog
