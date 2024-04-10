@@ -78,13 +78,13 @@ class RustDeskPeer(models.Model):
     '''
     uid = models.CharField(verbose_name=_('用户ID'), max_length=16)
     rid = models.CharField(verbose_name=_('客户端ID'), max_length=60)
-    username = models.CharField(verbose_name=_('系统用户名'), max_length=20)
-    hostname = models.CharField(verbose_name=_('操作系统名'), max_length=30)
+    username = models.CharField(verbose_name=_('系统用户名'), max_length=20, blank=True)
+    hostname = models.CharField(verbose_name=_('操作系统名'), max_length=30, blank=True)
     alias = models.CharField(verbose_name=_('别名'), max_length=30)
-    platform = models.CharField(verbose_name=_('平台'), max_length=30)
-    tags = models.CharField(verbose_name=_('标签'), max_length=30)
-    rhash = models.CharField(verbose_name=_('设备链接密码'), max_length=60)
-    ip = models.CharField(verbose_name=_('IP Address'), max_length=16, default="")
+    platform = models.CharField(verbose_name=_('平台'), max_length=30, blank=True)
+    tags = models.CharField(verbose_name=_('标签'), max_length=30, blank=True)
+    rhash = models.CharField(verbose_name=_('设备链接密码'), max_length=60, blank=True)
+    ip = models.CharField(verbose_name=_('IP Address'), max_length=16, default="", blank=True)
     
     class Meta:
         ordering = ('-username',)
