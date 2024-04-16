@@ -29,7 +29,7 @@ table {
     position: relative;
 }
 
-.managedTable {
+#managedTable {
     max-height: 500px;
     overflow: auto;
 }
