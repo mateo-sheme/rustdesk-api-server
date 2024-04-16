@@ -196,7 +196,7 @@
 }
 
 .login-body .login-box h3 {
-    color: #444;
+    color: #2c8cff;
     font-size: 22px;
     font-weight: 100;
     text-align: center;
@@ -388,7 +388,7 @@ html .skin-0 .dblclick-tips-box i.layui-layer-TipsB {
 html .skin-1 .my-header .my-header-logo,
 html .skin-1 .layui-nav .layui-nav-item a,
 html .skin-1 .layui-nav .layui-nav-item a:hover {
-    color: #444;
+    color: #2c8cff;
 }
 
 html .skin-1 .my-header,
@@ -416,15 +416,15 @@ html .skin-1 .dblclick-tips-box i.layui-layer-TipsB {
 }
 
 html .skin-1 .layui-nav .layui-nav-itemed > a {
-    background: #444 !important;
+    background: #2c8cff !important;
 }
 
 html .skin-1 .layui-nav .layui-nav-more {
-    border-color: #444 transparent transparent;
+    border-color: #2c8cff transparent transparent;
 }
 
 html .skin-1 .layui-nav .layui-nav-mored {
-    border-color: transparent transparent #444;
+    border-color: transparent transparent #2c8cff;
 }
 
 /* skin2 */
