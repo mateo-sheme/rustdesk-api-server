@@ -6,11 +6,12 @@
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div style="padding: 20px; background-color: #F2F2F2;">
   <div class="layui-row layui-col-space15">
+    <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
     {% if not show_all %}
     <div class="layui-col-md15">
       <div class="layui-card">
         <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】</div>
-        <div class="layui-card-body id=managedTable">
+        <div class="layui-card-body">
           <table class="layui-table sortable">
             <thead>
               <tr>

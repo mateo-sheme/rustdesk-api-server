@@ -25,6 +25,25 @@
                 layer.msg(elem.text());
             });
         });
+        document.addEventListener('DOMContentLoaded', (event) => {
+        // Place your globalSearch function or any DOM-related JS here
+        window.globalSearch = function() {
+            var input, filter, tables, tr, td, txtValue;
+            input = document.getElementById("globalSearchInput");
+            filter = input.value.toUpperCase();
+            tables = document.getElementsByTagName("table");
+
+            for (let table of tables) {
+                tr = table.getElementsByTagName("tr");
+                for (let i = 1; i < tr.length; i++) {
+                    let row = tr[i];
+                    let cells = row.getElementsByTagName("td");
+                    let textContent = Array.from(cells).map(cell => cell.textContent.toUpperCase());
+                    row.style.display = textContent.some(text => text.includes(filter)) ? "" : "none";
+                }
+            }
+        }
+    });
     </script>
 
     <ul class="layui-nav">
