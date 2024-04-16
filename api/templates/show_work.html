@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load my_filters %}
 {% block title %}RustDesk WebUI{% endblock %}
-{% block legend_name %}{{ "综合屏" | translate }}{% endblock %}
+{% block legend_name %}{{ "Devices" | translate }}{% endblock %}
 {% block content %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div style="padding: 20px; background-color: #F2F2F2;">
@@ -9,7 +9,7 @@
     {% if not show_all %}
     <div class="layui-col-md15">
       <div class="layui-card">
-        <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "设备统计" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】</div>
+        <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】</div>
         <div class="layui-card-body">
           <table class="layui-table sortable">
             <thead>
@@ -77,7 +77,7 @@
     {% if u.is_admin and show_all %}
     <div class="layui-col-md15">
       <div class="layui-card">
-        <div class="layui-card-header">{{ online_count_all }}/{{page_obj.paginator.count }}: {{ "全部用户" | translate }} &raquo;
+        <div class="layui-card-header">{{ online_count_all }}/{{page_obj.paginator.count }}: {{ "All Devices" | translate }} &raquo;
           <div class="layui-btn" ><a href="/api/down_peers">{{ "导出xlsx" | translate }}</a></div>
         </div>
         <div class="layui-card-body">
