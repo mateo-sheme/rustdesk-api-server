@@ -35,7 +35,12 @@ thead tr {
     border: 1px solid #2c8cff;
 }
 
-th, td {
+th {
+    padding: 12px 15px;
+    position: sticky;
+}
+
+td {
     padding: 12px 15px;
 }
 
