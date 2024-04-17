@@ -343,7 +343,7 @@ def work(request):
     paginator = Paginator(all_info, 100) if show_type == 'admin' and u.is_admin else Paginator(single_info, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count_single':online_count_single, 'online_count_all':online_count_all})
+    return render(request, 'show_work.html', {'u':u, 'show_all':show_all, 'page_obj':page_obj, 'online_count_single':online_count_single, 'online_count_all':online_count_all, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def down_peers(request):
@@ -467,3 +467,9 @@ def share(request):
 
         return JsonResponse({'code':1, 'shash':sharelink.shash})
 
+def is_mobile(request):
+    user_agent = request.META['HTTP_USER_AGENT']
+    if 'Mobile' in user_agent or 'Android' in user_agent or 'iPhone' in user_agent:
+        return 'base_phone.html'
+    else:
+        return 'base.html'
