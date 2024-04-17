@@ -322,14 +322,14 @@ def conn_log(request):
     paginator = Paginator(get_conn_log(), 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'show_conn_log.html', {'page_obj':page_obj})
+    return render(request, 'show_conn_log.html', {'page_obj':page_obj, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def file_log(request):
     paginator = Paginator(get_file_log(), 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'show_file_log.html', {'page_obj':page_obj})
+    return render(request, 'show_file_log.html', {'page_obj':page_obj, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def work(request):
