@@ -1,12 +1,13 @@
 {% extends phone_or_desktop %}
 {% load my_filters %}
 {% block title %}RustDesk WebUI{% endblock %}
-{% block legend_name %}{{ "综合屏" | translate }}{% endblock %}
+{% block legend_name %}{{ "File Transfer Log" | translate }}{% endblock %}
 {% block content %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div style="padding: 20px; background-color: #F2F2F2;">
   <div class="layui-row layui-col-space15">
     <div class="layui-col-md15">
+        <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
       <div class="layui-card">
         <div class="layui-card-header">{{ "File Transfer Log" }}:【{{u.username}}】</div>
         <div class="layui-card-body">
