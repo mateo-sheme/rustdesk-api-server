@@ -420,6 +420,7 @@ def download_file(request, filename, path):
 
 @login_required(login_url='/api/user_action?action=login')
 def download(request):
+    print("i'm here")
     filename = request.GET['filename']
     path = request.GET['path']
     print(path)
