@@ -395,9 +395,7 @@ def clients(request):
                 'file': file,
                 'modified': modified
             }
-    print("i made it here")
-    print(client_files)
-    return render(request, 'clients.html', {'client_files': client_files})
+    return render(request, 'clients.html', {'client_files': client_files, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
