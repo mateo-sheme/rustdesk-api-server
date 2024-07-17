@@ -418,7 +418,7 @@ def download_file(request, filename, path):
     # Return the response.
     return response
 
-@login_required(login_url='/login')
+@login_required(login_url='/api/user_action?action=login')
 def download(request):
     filename = request.GET['filename']
     path = request.GET['path']
