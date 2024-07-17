@@ -21,6 +21,9 @@ import time
 import hashlib
 import sys
 from dateutil import tz
+import platform
+import psutil
+import os
 
 from io import BytesIO
 import xlwt
@@ -316,6 +319,84 @@ def get_file_log():
         new_ordered_dict[key] = alog
 
     return [v for k, v in new_ordered_dict.items()]
+
+@login_required(login_url='/api/user_action?action=login')
+def sys_info(request):
+    hostname = platform.node()
+    cpu_usage = psutil.cpu_percent()
+    memory_usage = psutil.virtual_memory().percent
+    disk_usage = psutil.disk_usage('/').percent
+    print(cpu_usage, memory_usage, disk_usage)
+    return render(request, 'show_sys_info.html', {'hostname':hostname, 'cpu_usage':cpu_usage, 'memory_usage':memory_usage, 'disk_usage':disk_usage, 'phone_or_desktop': is_mobile(request)})
+
+@login_required(login_url='/api/user_action?action=login')
+def clients(request):
+    basedir = os.path.join('clients')
+    androidaarch64 = os.path.join(basedir,'android','aarch64')
+    androidarmv7 = os.path.join(basedir,'android','armv7')
+    linuxaarch64 = os.path.join(basedir,'linux','aarch64')
+    linuxx86_64 = os.path.join(basedir,'linux','x86_64')
+    mocos = os.path.join(basedir,'macOS')
+    sciter = os.path.join(basedir,'sciter')
+    client_files = {}
+    if os.path.exists(basedir):
+        for file in os.listdir(basedir):
+            filepath = os.path.join(basedir,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(androidaarch64):
+        for file in os.listdir(androidaarch64):
+            filepath = os.path.join(androidaarch64,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(androidarmv7):
+        for file in os.listdir(androidarmv7):
+            filepath = os.path.join(androidarmv7,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(linuxaarch64):
+        for file in os.listdir(linuxaarch64):
+            filepath = os.path.join(linuxaarch64,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(linuxx86_64):
+        for file in os.listdir(linuxx86_64):
+            filepath = os.path.join(linuxx86_64,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(mocos):
+        for file in os.listdir(mocos):
+            filepath = os.path.join(mocos,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+    if os.path.exists(sciter):
+        for file in os.listdir(sciter):
+            filepath = os.path.join(sciter,file)
+            modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+            client_files[file] = {
+                'file': file,
+                'modified': modified
+            }
+
+    return render(request, 'clients.html', {'client_files': client_files})
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):

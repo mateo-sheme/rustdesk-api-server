@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^conn_log',views.conn_log),
     url(r'^file_log',views.file_log),
     url(r'^audit',views.audit),
+    url(r'^sys_info',views.sys_info),
+    url(r'^clients',views.clients),
     ]

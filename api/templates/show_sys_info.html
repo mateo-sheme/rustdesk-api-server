@@ -1,0 +1,14 @@
+{% extends phone_or_desktop %}
+{% load my_filters %}
+{% block title %}RustDesk WebUI{% endblock %}
+{% block legend_name %}{{ "Server Information" | translate }}{% endblock %}
+{% block content %}
+<br>Hostname: 
+{{ hostname }}
+<br>CPU Usage: 
+{{ cpu_usage }}
+<br>Memory Usage: 
+{{ memory_usage }}
+<br>Disk Usage: 
+{{ disk_usage }}
+{% endblock %}

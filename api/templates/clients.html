@@ -1,0 +1,48 @@
+{% extends phone_or_desktop %}
+{% load my_filters %}
+{% block title %}RustDesk WebUI{% endblock %}
+{% block legend_name %}{{ "File Transfer Log" | translate }}{% endblock %}
+{% block content %}
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+    // Place your globalSearch function or any DOM-related JS here
+    window.globalSearch = function() {
+        var input, filter, tables, tr, td, txtValue;
+        input = document.getElementById("globalSearchInput");
+        filter = input.value.toUpperCase();
+        tables = document.getElementsByTagName("table");
+
+        for (let table of tables) {
+            tr = table.getElementsByTagName("tr");
+            for (let i = 1; i < tr.length; i++) {
+                let row = tr[i];
+                let cells = row.getElementsByTagName("td");
+                let textContent = Array.from(cells).map(cell => cell.textContent.toUpperCase());
+                row.style.display = textContent.some(text => text.includes(filter)) ? "" : "none";
+            }
+        }
+    }
+});
+</script>
+<a href="/user_action?action=logout">Log Out</a>
+<input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
+<table class="sortable">
+    <thead></thead>
+    <tbody>
+        <tr>
+            <th>File</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+        {% for filename, fileinfo in pdf_files.items %}
+        <tr>
+            <td><a href='/download?filename={{filename}}'>{{filename}}</a></td>
+            <td>{{fileinfo.size}}</td>
+            <td>{{fileinfo.modified}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
