@@ -331,6 +331,7 @@ def sys_info(request):
 
 @login_required(login_url='/api/user_action?action=login')
 def clients(request):
+    print("i made it here")
     basedir = os.path.join('clients')
     androidaarch64 = os.path.join(basedir,'android','aarch64')
     androidarmv7 = os.path.join(basedir,'android','armv7')
