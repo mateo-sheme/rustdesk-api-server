@@ -348,7 +348,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': basedir
             }
     if os.path.exists(androidaarch64):
         for file in os.listdir(androidaarch64):
@@ -357,7 +357,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': androidaarch64
             }
     if os.path.exists(androidarmv7):
         for file in os.listdir(androidarmv7):
@@ -366,7 +366,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': androidarmv7
             }
     if os.path.exists(linuxaarch64):
         for file in os.listdir(linuxaarch64):
@@ -375,7 +375,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': linuxaarch64
             }
     if os.path.exists(linuxx86_64):
         for file in os.listdir(linuxx86_64):
@@ -384,7 +384,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': linuxx86_64
             }
     if os.path.exists(mocos):
         for file in os.listdir(mocos):
@@ -393,7 +393,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': mocos
             }
     if os.path.exists(sciter):
         for file in os.listdir(sciter):
@@ -402,7 +402,7 @@ def clients(request):
             client_files[file] = {
                 'file': file,
                 'modified': modified,
-                'path': filepath
+                'path': sciter
             }
     return render(request, 'clients.html', {'client_files': client_files, 'phone_or_desktop': is_mobile(request)})
 
