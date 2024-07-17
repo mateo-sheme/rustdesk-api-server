@@ -25,20 +25,17 @@
     }
 });
 </script>
-<a href="/user_action?action=logout">Log Out</a>
 <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
 <table class="sortable">
     <thead></thead>
     <tbody>
         <tr>
             <th>File</th>
-            <th>Size</th>
             <th>Date</th>
         </tr>
-        {% for filename, fileinfo in pdf_files.items %}
+        {% for filename, fileinfo in client_files.items %}
         <tr>
             <td><a href='/download?filename={{filename}}'>{{filename}}</a></td>
-            <td>{{fileinfo.size}}</td>
             <td>{{fileinfo.modified}}</td>
         </tr>
         {% endfor %}
