@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^audit',views.audit),
     url(r'^sys_info',views.sys_info),
     url(r'^clients',views.clients),
+    url(r'^download',views.download),
     ]

@@ -1,4 +1,5 @@
 # cython:language_level=3
+from pathlib import Path
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
@@ -29,6 +30,7 @@ from io import BytesIO
 import xlwt
 from django.utils.translation import gettext as _
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 salt = 'xiaomo'
 EFFECTIVE_SECONDS = 7200
 
@@ -345,7 +347,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(androidaarch64):
         for file in os.listdir(androidaarch64):
@@ -353,7 +356,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(androidarmv7):
         for file in os.listdir(androidarmv7):
@@ -361,7 +365,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(linuxaarch64):
         for file in os.listdir(linuxaarch64):
@@ -369,7 +374,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(linuxx86_64):
         for file in os.listdir(linuxx86_64):
@@ -377,7 +383,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(mocos):
         for file in os.listdir(mocos):
@@ -385,7 +392,8 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     if os.path.exists(sciter):
         for file in os.listdir(sciter):
@@ -393,9 +401,28 @@ def clients(request):
             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
             client_files[file] = {
                 'file': file,
-                'modified': modified
+                'modified': modified,
+                'path': filepath
             }
     return render(request, 'clients.html', {'client_files': client_files, 'phone_or_desktop': is_mobile(request)})
+
+def download_file(request, filename, path):
+    file_path = os.path.join(str(BASE_DIR),path,filename)
+
+    with open(file_path, 'rb') as file:
+        response = HttpResponse(file, headers={
+            'Content-Type': 'application/x-binary',
+            'Content-Disposition': f'attachment; filename="{filename}"'
+        })
+
+    # Return the response.
+    return response
+
+@login_required(login_url='/login')
+def download(request):
+    filename = request.GET['filename']
+    path = request.GET['path']
+    return download_file(request, filename, path)
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
