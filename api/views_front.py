@@ -408,7 +408,7 @@ def clients(request):
 
 def download_file(request, filename, path):
     file_path = os.path.join(str(BASE_DIR),path,filename)
-
+    print(file_path)
     with open(file_path, 'rb') as file:
         response = HttpResponse(file, headers={
             'Content-Type': 'application/x-binary',
@@ -422,6 +422,8 @@ def download_file(request, filename, path):
 def download(request):
     filename = request.GET['filename']
     path = request.GET['path']
+    print(path)
+    print(filename)
     return download_file(request, filename, path)
 
 @login_required(login_url='/api/user_action?action=login')
