@@ -414,8 +414,6 @@ def download_file(request, filename, path):
             'Content-Type': 'application/x-binary',
             'Content-Disposition': f'attachment; filename="{filename}"'
         })
-
-    # Return the response.
     return response
 
 @login_required(login_url='/api/user_action?action=login')
