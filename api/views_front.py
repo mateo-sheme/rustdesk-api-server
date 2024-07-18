@@ -343,7 +343,7 @@ def clients(request):
     client_files = {}
     if os.path.exists(basedir):
         for file in os.listdir(basedir):
-            if os.path.isfile(file) and (file.endswith(".exe") or file.endswith(".msi")):
+            if (file.endswith(".exe") or file.endswith(".msi")):
                 filepath = os.path.join(basedir,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -353,7 +353,7 @@ def clients(request):
                 }
     if os.path.exists(androidaarch64):
         for file in os.listdir(androidaarch64):
-            if os.path.isfile(file) and file.endswith(".apk"):
+            if file.endswith(".apk"):
                 filepath = os.path.join(androidaarch64,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -363,7 +363,7 @@ def clients(request):
                 }
     if os.path.exists(androidarmv7):
         for file in os.listdir(androidarmv7):
-            if os.path.isfile(file) and file.endswith(".apk"):
+            if file.endswith(".apk"):
                 filepath = os.path.join(androidarmv7,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -373,7 +373,7 @@ def clients(request):
                 }
     if os.path.exists(linuxaarch64):
         for file in os.listdir(linuxaarch64):
-            if os.path.isfile(file) and (file.endswith(".rpm") or file.endswith(".deb")):
+            if (file.endswith(".rpm") or file.endswith(".deb")):
                 filepath = os.path.join(linuxaarch64,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -383,7 +383,7 @@ def clients(request):
                 }
     if os.path.exists(linuxx86_64):
         for file in os.listdir(linuxx86_64):
-            if os.path.isfile(file) and (file.endswith(".rpm") or file.endswith(".deb")):
+            if (file.endswith(".rpm") or file.endswith(".deb")):
                 filepath = os.path.join(linuxx86_64,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -393,7 +393,7 @@ def clients(request):
                 }
     if os.path.exists(mocos):
         for file in os.listdir(mocos):
-            if os.path.isfile(file) and file.endswith(".dmg"):
+            if file.endswith(".dmg"):
                 filepath = os.path.join(mocos,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
@@ -403,7 +403,7 @@ def clients(request):
                 }
     if os.path.exists(sciter):
         for file in os.listdir(sciter):
-            if os.path.isfile(file) and file.endswith(".exe"):
+            if file.endswith(".exe"):
                 filepath = os.path.join(sciter,file)
                 modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
                 client_files[file] = {
