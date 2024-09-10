@@ -99,7 +99,7 @@ def generator_view(request):
             return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait"})
     else:
         form = GenerateForm()
-    return render(request, 'generator.html', {'form': form})
+    return render(request, 'generator.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
 
 
 def check_for_file(request):
@@ -142,3 +142,10 @@ def update_github_run(request):
     mystatus = data.get('status')
     GithubRun.objects.filter(Q(uuid=myuuid)).update(status=mystatus)
     return HttpResponse('')
+
+def is_mobile(request):
+    user_agent = request.META['HTTP_USER_AGENT']
+    if 'Mobile' in user_agent or 'Android' in user_agent or 'iPhone' in user_agent:
+        return 'base_phone.html'
+    else:
+        return 'base.html'
