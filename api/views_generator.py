@@ -96,7 +96,7 @@ def generator_view(request):
             response = requests.post(url, json=data, headers=headers)
             print(response)
 
-            return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait"})
+            return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'phone_or_desktop': is_mobile(request)})
     else:
         form = GenerateForm()
     return render(request, 'generator.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
