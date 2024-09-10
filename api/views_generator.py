@@ -70,7 +70,7 @@ def generator_view(request):
             encodedCustom = base64_bytes.decode("ascii")
 
             ####from here run the github action, we need user, repo, access token.
-            url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rustdesk/actions/workflows/test.yml/dispatches'  
+            url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rustdesk/actions/workflows/generator.yml/dispatches'  
             data = {
                 "ref":"master",
                 "inputs":{
