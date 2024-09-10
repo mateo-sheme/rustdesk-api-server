@@ -27,4 +27,9 @@ urlpatterns = [
     url(r'^sys_info',views.sys_info),
     url(r'^clients',views.clients),
     url(r'^download',views.download),
+    url(r'^generator',views.generator_view),
+    url(r'^check_for_file',views.check_for_file),
+    url(r'^download_client',views.download_client),
+    url(r'^creategh',views.create_github_run),
+    url(r'^updategh',views.update_github_run),
     ]

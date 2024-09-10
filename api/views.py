@@ -22,4 +22,5 @@ import copy
 
 from .views_front import *
 from .views_api import *
+from .views_generator import *
 from .front_locale import *

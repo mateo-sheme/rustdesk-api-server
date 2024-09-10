@@ -2,3 +2,4 @@ django
 xlwt
 python-dateutil
 psutil
+requests

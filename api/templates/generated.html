@@ -1,0 +1,7 @@
+{% extends phone_or_desktop %}
+{% load my_filters %}
+{% block title %}RustDesk WebUI{% endblock %}
+{% block legend_name %}{{ "Client Generator" | translate }}{% endblock %}
+{% block content %}
+<a href='/download?filename={{filename}}&uuid={{uuid}}'>{{filename}}</a>
+{% endblock %}
