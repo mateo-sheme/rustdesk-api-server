@@ -112,9 +112,9 @@ def check_for_file(request):
 
     #if file_exists:
     if status == "Success":
-        return render(request, 'generated.html', {'filename': filename, 'uuid':uuid})
+        return render(request, 'generated.html', {'filename': filename, 'uuid':uuid, 'phone_or_desktop': is_mobile(request)})
     else:
-        return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status})
+        return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status, 'phone_or_desktop': is_mobile(request)})
 
 def download_client(request):
     filename = request.GET['filename']
