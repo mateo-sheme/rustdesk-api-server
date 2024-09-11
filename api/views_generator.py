@@ -25,7 +25,7 @@ def generator_view(request):
             if not key:
                 key = 'OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=' #default rustdesk key
             if not apiServer:
-                apiServer = server+":21114"
+                apiServer = "http://"+server+":21114"
             direction = form.cleaned_data['direction']
             installation = form.cleaned_data['installation']
             settings = form.cleaned_data['settings']
