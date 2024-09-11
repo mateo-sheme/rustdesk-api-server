@@ -440,6 +440,16 @@ def download(request):
     path = request.GET['path']
     return download_file(request, filename, path)
 
+@login_required(login_url='/api/user_cation?action=login')
+def delete_file(request):
+    filename = request.GET['filename']
+    path = request.GET['path']
+    file_path = os.path.join(str(BASE_DIR),path,filename)
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+    return HttpResponseRedirect('/api/clients')
+
+
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
     paginator = Paginator(get_conn_log(), 20)

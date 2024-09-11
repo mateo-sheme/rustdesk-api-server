@@ -117,18 +117,18 @@ def check_for_file(request):
     else:
         return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status, 'phone_or_desktop': is_mobile(request)})
 
-def download_client(request):
-    filename = request.GET['filename']
-    uuid = request.GET['uuid']
-    filename = filename+".exe"
-    file_path = os.path.join('exe',uuid,filename)
-    with open(file_path, 'rb') as file:
-        response = HttpResponse(file, headers={
-            'Content-Type': 'application/vnd.microsoft.portable-executable',
-            'Content-Disposition': f'attachment; filename="{filename}"'
-        })
+# def download_client(request):
+#     filename = request.GET['filename']
+#     uuid = request.GET['uuid']
+#     filename = filename+".exe"
+#     file_path = os.path.join('exe',uuid,filename)
+#     with open(file_path, 'rb') as file:
+#         response = HttpResponse(file, headers={
+#             'Content-Type': 'application/vnd.microsoft.portable-executable',
+#             'Content-Disposition': f'attachment; filename="{filename}"'
+#         })
 
-    return response
+#     return response
 
 def create_github_run(myuuid):
     new_github_run = GithubRun(
@@ -147,7 +147,7 @@ def update_github_run(request):
 def save_custom_client(request):
     file = request.FILES['file']
     file_save_path = "clients/custom/%s" % file.name
-    pathlib.Path("clients/cuatom").mkdir(parents=True, exist_ok=True)
+    pathlib.Path("clients/custom").mkdir(parents=True, exist_ok=True)
     with open(file_save_path, "wb+") as f:
         for chunk in file.chunks():
             f.write(chunk)

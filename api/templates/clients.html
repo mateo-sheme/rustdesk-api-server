@@ -78,6 +78,7 @@
                 <tr>
                     <td><a href='/api/download?filename={{filename}}&path={{fileinfo.path}}'>{{filename}}</a></td>
                     <td>{{fileinfo.modified}}</td>
+                    <td><a href='/api/delete_file?filename={{filename}}&path={{fileinfo.path}}'>Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
