@@ -147,7 +147,6 @@ def update_github_run(request):
     GithubRun.objects.filter(Q(uuid=myuuid)).update(status=mystatus)
     return HttpResponse('')
 
-@login_required(login_url='/api/user_action?action=login')
 def save_custom_client(request):
     file = request.FILES['file']
     file_save_path = "clients/custom/%s" % file.name
