@@ -3,6 +3,7 @@
 {% block title %}RustDesk WebUI{% endblock %}
 {% block legend_name %}{{ "Client Downloads" | translate }}{% endblock %}
 {% block content %}
+{& if phone_or_desktop = 'base.html' %}
 <style>
     .container {
     display: grid;
@@ -22,6 +23,7 @@
         border-radius: 5px; /* Add rounded corners for a more 3D effect */
     }
 </style>
+{% endif %}
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
