@@ -3,6 +3,25 @@
 {% block title %}RustDesk WebUI{% endblock %}
 {% block legend_name %}{{ "Client Downloads" | translate }}{% endblock %}
 {% block content %}
+<style>
+    .container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(2, auto); /* Adjust the number of rows as needed */
+    padding: 20px; /* Adjust the padding value as needed */
+    max-width: 1000px; /* Set a maximum width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+    }
+    .section {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+        border-radius: 5px; /* Add rounded corners for a more 3D effect */
+    }
+</style>
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -27,35 +46,40 @@
 </script>
 <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
 <a href="/api/generator">Client Generator</a>
-<table class="sortable">
-    <thead></thead>
-    <tbody>
-        <tr>
-            <th>File</th>
-            <th>Date</th>
-        </tr>
-        {% for filename, fileinfo in client_files.items %}
-        <tr>
-            <td><a href='/api/download?filename={{filename}}&path={{fileinfo.path}}'>{{filename}}</a></td>
-            <td>{{fileinfo.modified}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<table class="sortable">
-    <thead></thead>
-    <tbody>
-        <tr>
-            <th>File</th>
-            <th>Date</th>
-        </tr>
-        {% for filename, fileinfo in client_custom_files.items %}
-        <tr>
-            <td><a href='/api/download?filename={{filename}}&path={{fileinfo.path}}'>{{filename}}</a></td>
-            <td>{{fileinfo.modified}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+<div class="container">
+    <div class="section">
+        <table class="sortable">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <th>File</th>
+                    <th>Date</th>
+                </tr>
+                {% for filename, fileinfo in client_files.items %}
+                <tr>
+                    <td><a href='/api/download?filename={{filename}}&path={{fileinfo.path}}'>{{filename}}</a></td>
+                    <td>{{fileinfo.modified}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="section">
+        <table class="sortable">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <th>File</th>
+                    <th>Date</th>
+                </tr>
+                {% for filename, fileinfo in client_custom_files.items %}
+                <tr>
+                    <td><a href='/api/download?filename={{filename}}&path={{fileinfo.path}}'>{{filename}}</a></td>
+                    <td>{{fileinfo.modified}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
