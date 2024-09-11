@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 import os
 import re
@@ -113,7 +113,7 @@ def check_for_file(request):
 
     if status == "Success":
         #return render(request, 'generated.html', {'filename': filename, 'uuid':uuid, 'phone_or_desktop': is_mobile(request)})
-        return render(request, '/api/clients')
+        return HttpResponseRedirect('/api/clients')
     else:
         return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status, 'phone_or_desktop': is_mobile(request)})
 
