@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 import os
 import re
 import requests
@@ -12,6 +13,7 @@ from django.db.models import Q
 from .forms import GenerateForm
 from .models import GithubRun
 
+@login_required(login_url='/api/user_action?action=login')
 def generator_view(request):
     if request.method == 'POST':
         form = GenerateForm(request.POST, request.FILES)
@@ -102,7 +104,7 @@ def generator_view(request):
         form = GenerateForm()
     return render(request, 'generator.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
 
-
+@login_required(login_url='/api/user_action?action=login')
 def check_for_file(request):
     filename = request.GET['filename']
     uuid = request.GET['uuid']
@@ -117,6 +119,7 @@ def check_for_file(request):
     else:
         return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status, 'phone_or_desktop': is_mobile(request)})
 
+@login_required(login_url='/api/user_action?action=login')
 def download_client(request):
     filename = request.GET['filename']
     uuid = request.GET['uuid']
@@ -144,6 +147,7 @@ def update_github_run(request):
     GithubRun.objects.filter(Q(uuid=myuuid)).update(status=mystatus)
     return HttpResponse('')
 
+@login_required(login_url='/api/user_action?action=login')
 def save_custom_client(request):
     file = request.FILES['file']
     file_save_path = "clients/custom/%s" % file.name
