@@ -6,6 +6,7 @@ import requests
 import base64
 import json
 import uuid
+import pathlib
 from django.conf import settings as _settings
 from django.db.models import Q
 from .forms import GenerateForm
@@ -110,7 +111,6 @@ def check_for_file(request):
     gh_run = GithubRun.objects.filter(Q(uuid=uuid)).first()
     status = gh_run.status
 
-    #if file_exists:
     if status == "Success":
         return render(request, 'generated.html', {'filename': filename, 'uuid':uuid, 'phone_or_desktop': is_mobile(request)})
     else:
@@ -142,6 +142,16 @@ def update_github_run(request):
     mystatus = data.get('status')
     GithubRun.objects.filter(Q(uuid=myuuid)).update(status=mystatus)
     return HttpResponse('')
+
+def save_custom_client(request):
+    file = request.FILES['file']
+    file_save_path = "static/%s.exe" % file.name
+    with open(file_save_path, "wb+") as f:
+        for chunk in file.chunks():
+            f.write(chunk)
+
+    return HttpResponse("File saved successfully!")
+
 
 def is_mobile(request):
     user_agent = request.META['HTTP_USER_AGENT']
