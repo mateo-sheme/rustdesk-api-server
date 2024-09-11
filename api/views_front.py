@@ -340,7 +340,9 @@ def clients(request):
     linuxx86_64 = os.path.join(basedir,'linux','x86_64')
     mocos = os.path.join(basedir,'macOS')
     sciter = os.path.join(basedir,'sciter')
+    custom = os.path.join(basedir,'custom')
     client_files = {}
+    client_custom_files = {}
     if os.path.exists(basedir):
         for file in os.listdir(basedir):
             if (file.endswith(".exe") or file.endswith(".msi")):
@@ -411,7 +413,17 @@ def clients(request):
                     'modified': modified,
                     'path': sciter
                 }
-    return render(request, 'clients.html', {'client_files': client_files, 'phone_or_desktop': is_mobile(request)})
+    if os.path.exists(custom):
+        for file in os.listdir(custom):
+            if file.endswith(".exe"):
+                filepath = os.path.join(custom,file)
+                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+                client_custom_files[file] = {
+                    'file': file,
+                    'modified': modified,
+                    'path': custom
+                }
+    return render(request, 'clients.html', {'client_files': client_files, 'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
 
 def download_file(request, filename, path):
     file_path = os.path.join(str(BASE_DIR),path,filename)
