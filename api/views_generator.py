@@ -147,7 +147,7 @@ def update_github_run(request):
 def save_custom_client(request):
     file = request.FILES['file']
     file_save_path = "clients/custom/%s" % file.name
-    pathlib.Path(file_save_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path("clients/cuatom").mkdir(parents=True, exist_ok=True)
     with open(file_save_path, "wb+") as f:
         for chunk in file.chunks():
             f.write(chunk)
