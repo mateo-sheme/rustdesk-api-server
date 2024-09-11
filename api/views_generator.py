@@ -117,18 +117,18 @@ def check_for_file(request):
     else:
         return render(request, 'waiting.html', {'filename':filename, 'uuid':uuid, 'status':status, 'phone_or_desktop': is_mobile(request)})
 
-# def download_client(request):
-#     filename = request.GET['filename']
-#     uuid = request.GET['uuid']
-#     filename = filename+".exe"
-#     file_path = os.path.join('exe',uuid,filename)
-#     with open(file_path, 'rb') as file:
-#         response = HttpResponse(file, headers={
-#             'Content-Type': 'application/vnd.microsoft.portable-executable',
-#             'Content-Disposition': f'attachment; filename="{filename}"'
-#         })
+def download_client(request):
+    filename = request.GET['filename']
+    uuid = request.GET['uuid']
+    filename = filename+".exe"
+    file_path = os.path.join('exe',uuid,filename)
+    with open(file_path, 'rb') as file:
+        response = HttpResponse(file, headers={
+            'Content-Type': 'application/vnd.microsoft.portable-executable',
+            'Content-Disposition': f'attachment; filename="{filename}"'
+        })
 
-#     return response
+    return response
 
 def create_github_run(myuuid):
     new_github_run = GithubRun(
