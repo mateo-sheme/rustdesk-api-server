@@ -4,6 +4,7 @@ class GenerateForm(forms.Form):
     exename = forms.CharField(label="Name for EXE file", required=True)
     appname = forms.CharField(label="Custom App Name", required=False)
     iconfile = forms.FileField(label="Custom App Icon (in .png format)", required=False)
+    logofile = forms.FileField(label="Custom App Logo (in .png format)", required=False)
     serverIP = forms.CharField(label="Host", required=False)
     apiServer = forms.CharField(label="API Server", required=False)
     key = forms.CharField(label="Key", required=False)
