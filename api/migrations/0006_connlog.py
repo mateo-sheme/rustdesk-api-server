@@ -9,18 +9,18 @@ class Migration(migrations.Migration):
         ('api', '0005_log_alter_rustdesdevice_options_and_more'),
     ]
 
-    operations = [
-        migrations.CreateModel(
-            name='ConnLog',
-            fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False, verbose_name='ID')),
-                ('action', models.CharField(max_length=20, verbose_name='Action')),
-                ('conn_id', models.IntegerField(verbose_name='Connection ID')),
-                ('from_ip', models.CharField(max_length=30, verbose_name='From IP')),
-                ('rid', models.CharField(max_length=20, verbose_name='To ID')),
-                ('logged_at', models.CharField(max_length=25, verbose_name='Logged At')),
-                ('session_id', models.IntegerField(verbose_name='Session ID')),
-                ('uuid', models.CharField(max_length=60, verbose_name='UUID')),
-            ],
-        ),
-    ]
+    # operations = [
+    #     migrations.CreateModel(
+    #         name='ConnLog',
+    #         fields=[
+    #             ('id', models.IntegerField(primary_key=True, serialize=False, verbose_name='ID')),
+    #             ('action', models.CharField(max_length=20, verbose_name='Action')),
+    #             ('conn_id', models.IntegerField(verbose_name='Connection ID')),
+    #             ('from_ip', models.CharField(max_length=30, verbose_name='From IP')),
+    #             ('rid', models.CharField(max_length=20, verbose_name='To ID')),
+    #             ('logged_at', models.CharField(max_length=25, verbose_name='Logged At')),
+    #             ('session_id', models.IntegerField(verbose_name='Session ID')),
+    #             ('uuid', models.CharField(max_length=60, verbose_name='UUID')),
+    #         ],
+    #     ),
+    # ]
