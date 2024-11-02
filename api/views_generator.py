@@ -157,7 +157,7 @@ def generator_view(request):
             extras['urlLink'] = urlLink
             extras['delayFix'] = 'true' if delayFix else 'false'
             extras['version'] = version
-            extras['rdgen'] = 'true'
+            extras['rdgen'] = 'false'
             extra_input = json.dumps(extras)
 
             ####from here run the github action, we need user, repo, access token.
