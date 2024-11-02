@@ -3,3 +3,4 @@ xlwt
 python-dateutil
 psutil
 requests
+pillow
