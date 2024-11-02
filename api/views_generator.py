@@ -196,12 +196,12 @@ def generator_view(request):
             response = requests.post(url, json=data, headers=headers)
             print(response)
             if response.status_code == 204:
-                return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'platform':platform})
+                return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'phone_or_desktop': is_mobile(request), 'platform':platform})
             else:
                 return JsonResponse({"error": "Something went wrong"})
     else:
         form = GenerateForm()
-    return render(request, 'generator.html', {'form': form})
+    return render(request, 'generator.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def check_for_file(request):
