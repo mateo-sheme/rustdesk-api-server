@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^updategh',views.update_github_run),
     url(r'^save_custom_client',views.save_custom_client),
     url(r'^delete_file',views.delete_file),
+    url(r'^get_png',views.get_png),
     ]
