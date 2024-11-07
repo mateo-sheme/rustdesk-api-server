@@ -112,7 +112,7 @@
                 {% if one.rust_user|length > 0 %}
                 <td>{{one.rust_user}} </td>
                 {% else %}
-                <div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}">Add User</a></div>
+                <td><div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}">Add User</a></div></td>
                 {% endif %}
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
