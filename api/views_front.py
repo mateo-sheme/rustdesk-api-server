@@ -485,6 +485,7 @@ def add_peer(request):
 def edit_peer(request):
     if request.method == 'POST':
         form = EditPeerForm(request.POST)
+        print(form)
         if form.is_valid():
             rid = form.cleaned_data['clientID']
             uid = request.user.id
