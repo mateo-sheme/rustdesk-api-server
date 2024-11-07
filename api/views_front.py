@@ -477,8 +477,9 @@ def add_peer(request):
             peer.save()
             return HttpResponseRedirect('/api/work')
     else:
+        rid = request.GET.get('rid','')
         form = AddPeerForm()
-    return render(request, 'add_peer.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
+    return render(request, 'add_peer.html', {'form': form, 'rid': rid, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def delete_peer(request):

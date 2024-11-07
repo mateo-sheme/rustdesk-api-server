@@ -12,4 +12,7 @@
     {{ form.tags }}<br><br>
     <button type="submit">Add Peer</button>
 </form>
+<script>
+    document.getElementById("{{ form.clientID.id_for_label }}").value = "{{rid}}"
+</script>
 {% endblock %}

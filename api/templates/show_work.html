@@ -17,6 +17,7 @@
           <table class="layui-table sortable">
             <thead>
               <tr>
+                <th>Delete Client</th>
                 <th>{{ "客户端ID" | translate }}</th>
                 <th>{{ "状态" | translate }}</th>
                 <th>{{ "别名" | translate }}</th>
@@ -36,6 +37,7 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
+                <td><div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}">Delete Client</a></div></td>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.status}} </td>
                 <td>{{one.alias}}</td>
@@ -50,7 +52,6 @@
                 <td>{{one.create_time}}</td>
                 <td>{{one.update_time}}</td>
                 <td>{{one.ip}}</td>
-                <td><div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}">Delete Client</a></div></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -108,7 +109,11 @@
               {% for one in page_obj %}
               <tr>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
+                {% if one.rust_user|length > 0 %}
                 <td>{{one.rust_user}} </td>
+                {% else %}
+                <div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}">Add User</a></div>
+                {% endif %}
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
                 <td>{{one.hostname}} </td>
