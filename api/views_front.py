@@ -503,6 +503,8 @@ def edit_peer(request):
             updated_peer.save()
 
             return HttpResponseRedirect('/api/work')
+        else:
+            print("form is invalid")
     else:
         rid = request.GET.get('rid','')
         peer = RustDeskPeer.objects.get(rid=rid)
