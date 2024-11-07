@@ -477,7 +477,7 @@ def add_peer(request):
                 ip = ip
             )
             peer.save()
-            return JsonResponse({'code':1, 'url':'/api/work'})
+            return HttpResponseRedirect('/api/work')
     else:
         form = AddPeerForm()
     return render(request, 'add_peer.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
