@@ -502,13 +502,13 @@ def edit_peer(request):
         rid = request.GET.get('rid','')
         form = EditPeerForm()
         peer = RustDeskPeer(Q(rid=rid))
-        form.fields['clientID'] = rid
-        form.fields['alias'] = peer.alias
-        form.fields['tags'] = peer.tags
-        form.fields['username'] = peer.username
-        form.fields['hostname'] = peer.hostname
-        form.fields['platform'] = peer.platform
-        form.fields['ip'] = peer.ip
+        form.fields['clientID'].initial = rid
+        form.fields['alias'].initial = peer.alias
+        form.fields['tags'].initial = peer.tags
+        form.fields['username'].initial = peer.username
+        form.fields['hostname'].initial = peer.hostname
+        form.fields['platform'].initial = peer.platform
+        form.fields['ip'].initial = peer.ip
         return render(request, 'edit_peer.html', {'form': form, 'peer': peer, 'phone_or_desktop': is_mobile(request)})
     
 @login_required(login_url='/api/user_action?action=login')

@@ -3,6 +3,7 @@
 {% block title %}RustDesk{% endblock %}
 {% block legend_name %}{{ "Edit Peer" | translate }}{% endblock %}
 {% block content %}
+{{peer.rid}}
 <form action="/api/edit_peer" method="post" enctype="multipart/form-data">
     <label for="{{ form.alias.id_for_label }}">Alias:</label>
     {{ form.alias }}<br><br>
