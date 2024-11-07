@@ -12,7 +12,7 @@
       <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
       <div class="layui-card">
         <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "User Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】
-          <div class="layui-btn" ><a href="/api/add_peer"><i class='fas fa-plus'></i></a></div>
+          <a href="/api/add_peer"><i class='fas fa-plus'></i></a>
         </div>
         <div class="layui-card-body">
           <table class="layui-table sortable">
@@ -38,7 +38,7 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
-                <td><div class="layui-btn" ><a href="/api/edit_peer?rid={{one.rid}}"><i class='fas fa-edit'></i></a></div> / <div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}"><i class='fas fa-trash'></i></a></div></td>
+                <td><a href="/api/edit_peer?rid={{one.rid}}"><i class='fas fa-edit'></i></a> / <a href="/api/delete_peer?rid={{one.rid}}"><i class='fas fa-trash'></i></a></td>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.status}} </td>
                 <td>{{one.alias}}</td>
@@ -113,7 +113,7 @@
                 {% if one.rust_user|length > 0 %}
                 <td>{{one.rust_user}} </td>
                 {% else %}
-                <td><div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}"><i class='fas fa-plus'></i></a></div></td>
+                <td><a href="/api/add_peer?rid={{one.rid}}"><i class='fas fa-plus'></i></a></td>
                 {% endif %}
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
