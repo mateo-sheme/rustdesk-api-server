@@ -496,13 +496,13 @@ def edit_peer(request):
             ip = form.cleaned_data['ip']
 
             RustDeskPeer.objects.filter(Q(rid=rid) & Q(uid=uid)).update(username=username,hostname=hostname,platform=plat,alias=alias,tags=tags,ip=ip)
-            
+
             return HttpResponseRedirect('/api/work')
     else:
         rid = request.GET.get('rid','')
         form = EditPeerForm()
         peer = RustDeskPeer(Q(rid=rid))
-        return render(request, 'add_peer.html', {'form': form, 'peer': peer, 'phone_or_desktop': is_mobile(request)})
+        return render(request, 'edit_peer.html', {'form': form, 'peer': peer, 'phone_or_desktop': is_mobile(request)})
     
 @login_required(login_url='/api/user_action?action=login')
 def delete_peer(request):
