@@ -455,10 +455,8 @@ def add_peer(request):
     if request.method == 'POST':
         form = AddPeerForm(request.POST)
         if form.is_valid():
-            user_name = request.user
-            u = UserProfile.objects.get(username=user_name)
             rid = form.cleaned_data['clientID']
-            uid = u.id
+            uid = request.user.id
             username = form.cleaned_data['username']
             os = form.cleaned_data['os']
             plat = form.cleaned_data['platform']
@@ -481,6 +479,13 @@ def add_peer(request):
     else:
         form = AddPeerForm()
     return render(request, 'add_peer.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
+
+@login_required(login_url='/api/user_action?action=login')
+def delete_peer(request):
+    rid = request.GET.get('rid')
+    peer = RustDeskPeer.objects.filter(Q(uid=request.user.id) & Q(rid=rid))
+    peer.delete()
+    return HttpResponseRedirect('/api/work')
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
