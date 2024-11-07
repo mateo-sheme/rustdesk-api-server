@@ -500,7 +500,7 @@ def edit_peer(request):
             return HttpResponseRedirect('/api/work')
     else:
         rid = request.GET.get('rid','')
-        peer = RustDeskPeer.objects.filter(Q(rid=rid))
+        peer = RustDeskPeer.objects.get(rid=rid)
         initial_data = {
             'clientID': rid,
             'alias': peer.alias,
