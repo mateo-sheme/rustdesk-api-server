@@ -12,7 +12,7 @@
       <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
       <div class="layui-card">
         <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "User Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】
-          <a href="/api/add_peer"><i class='fa fa-plus'></i>Add Peer</a>
+          <a href="/api/add_peer"><i class='fa fa-plus'></i> Add Peer</a>
         </div>
         <div class="layui-card-body">
           <table class="layui-table sortable">
@@ -113,7 +113,7 @@
                 {% if one.rust_user|length > 0 %}
                 <td>{{one.rust_user}} </td>
                 {% else %}
-                <td><a href="/api/add_peer?rid={{one.rid}}"><i class='fa fa-plus'></i>Claim Peer</a></td>
+                <td><a href="/api/add_peer?rid={{one.rid}}"><i class='fa fa-plus'></i> Claim Peer</a></td>
                 {% endif %}
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
