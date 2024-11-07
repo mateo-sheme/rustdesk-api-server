@@ -504,7 +504,7 @@ def edit_peer(request):
         initial_data = {
             'clientID': rid,
             'alias': peer.alias,
-            'tag': peer.tags,
+            'tags': peer.tag,
             'username': peer.username,
             'hostname': peer.hostname,
             'platform': peer.platform,
