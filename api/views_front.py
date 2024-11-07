@@ -493,9 +493,14 @@ def edit_peer(request):
             plat = form.cleaned_data['platform']
             alias = form.cleaned_data['alias']
             tags = form.cleaned_data['tags']
-            ip = form.cleaned_data['ip']
 
-            RustDeskPeer.objects.filter(Q(rid=rid) & Q(uid=uid)).update(username=username,hostname=hostname,platform=plat,alias=alias,tags=tags,ip=ip)
+            updated_peer = RustDeskPeer.objects.get(rid=rid,uid=uid)
+            updated_peer.username=username
+            updated_peer.hostname=hostname
+            updated_peer.platform=plat
+            updated_peer.alias=alias
+            updated_peer.tags=tags
+            updated_peer.save()
 
             return HttpResponseRedirect('/api/work')
     else:
