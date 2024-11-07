@@ -458,7 +458,7 @@ def add_peer(request):
             user_name = request.user
             u = UserProfile.objects.get(username=user_name)
             rid = form.cleaned_data['clientID']
-            uid = u.uid
+            uid = u.id
             username = form.cleaned_data['username']
             os = form.cleaned_data['os']
             plat = form.cleaned_data['platform']
