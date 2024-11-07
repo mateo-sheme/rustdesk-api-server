@@ -37,4 +37,5 @@ urlpatterns = [
     url(r'^get_png',views.get_png),
     url(r'^add_peer',views.add_peer),
     url(r'^delete_peer',views.delete_peer),
+    url(r'^edit_peer',views.edit_peer),
     ]

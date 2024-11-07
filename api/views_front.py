@@ -29,7 +29,7 @@ import os
 from io import BytesIO
 import xlwt
 from django.utils.translation import gettext as _
-from .forms import AddPeerForm
+from .forms import AddPeerForm, EditPeerForm
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 salt = 'xiaomo'
@@ -458,7 +458,7 @@ def add_peer(request):
             rid = form.cleaned_data['clientID']
             uid = request.user.id
             username = form.cleaned_data['username']
-            os = form.cleaned_data['os']
+            hostname = form.cleaned_data['hostname']
             plat = form.cleaned_data['platform']
             alias = form.cleaned_data['alias']
             tags = form.cleaned_data['tags']
@@ -468,7 +468,7 @@ def add_peer(request):
                 uid = uid,
                 rid = rid,
                 username = username,
-                hostname = os,
+                hostname = hostname,
                 platform = plat,
                 alias = alias,
                 tags = tags,
@@ -481,6 +481,29 @@ def add_peer(request):
         form = AddPeerForm()
     return render(request, 'add_peer.html', {'form': form, 'rid': rid, 'phone_or_desktop': is_mobile(request)})
 
+@login_required(login_url='/api/user_action?action=login')
+def edit_peer(request):
+    if request.method == 'POST':
+        form = EditPeerForm(request.POST)
+        if form.is_valid():
+            rid = form.cleaned_data['clientID']
+            uid = request.user.id
+            username = form.cleaned_data['username']
+            hostname = form.cleaned_data['hostname']
+            plat = form.cleaned_data['platform']
+            alias = form.cleaned_data['alias']
+            tags = form.cleaned_data['tags']
+            ip = form.cleaned_data['ip']
+
+            RustDeskPeer.objects.filter(Q(rid=rid) & Q(uid=uid)).update(username=username,hostname=hostname,platform=plat,alias=alias,tags=tags,ip=ip)
+            
+            return HttpResponseRedirect('/api/work')
+    else:
+        rid = request.GET.get('rid','')
+        form = EditPeerForm()
+        peer = RustDeskPeer(Q(rid=rid))
+        return render(request, 'add_peer.html', {'form': form, 'peer': peer, 'phone_or_desktop': is_mobile(request)})
+    
 @login_required(login_url='/api/user_action?action=login')
 def delete_peer(request):
     rid = request.GET.get('rid')

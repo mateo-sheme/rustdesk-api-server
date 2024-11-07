@@ -17,7 +17,7 @@
           <table class="layui-table sortable">
             <thead>
               <tr>
-                <th>Delete Client</th>
+                <th>Edit / Delete</th>
                 <th>{{ "客户端ID" | translate }}</th>
                 <th>{{ "状态" | translate }}</th>
                 <th>{{ "别名" | translate }}</th>
@@ -37,7 +37,7 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
-                <td><div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}">Delete Client</a></div></td>
+                <td><div class="layui-btn" ><a href="/api/edit_peer?rid={{one.rid}}">Edit</a></div> / <div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}">Delete</a></div></td>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.status}} </td>
                 <td>{{one.alias}}</td>
