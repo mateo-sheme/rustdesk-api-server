@@ -3,6 +3,7 @@
 {% block title %}RustDesk{% endblock %}
 {% block legend_name %}{{ "Edit Peer" | translate }}{% endblock %}
 {% block content %}
+{{peer.rid}}
 <form action="/api/edit_peer" method="post" enctype="multipart/form-data">
     <input type="hidden" for="{{ form.clientID.id_for_label }}" value="{{peer.rid}}">
     <label for="{{ form.alias.id_for_label }}">Alias:</label>
@@ -19,13 +20,4 @@
     {{ form.ip }}<br><br>
     <button type="submit">Save Peer</button>
 </form>
-<script>
-    document.getElementById("{{ form.clientID.id_for_label }}").value = "{{peer.rid}}"
-    document.getElementById("{{ form.alias.id_for_label }}").value = "{{peer.alias}}"
-    document.getElementById("{{ form.tags.id_for_label }}").value = "{{peer.tags}}"
-    document.getElementById("{{ form.username.id_for_label }}").value = "{{peer.username}}"
-    document.getElementById("{{ form.hostname.id_for_label }}").value = "{{peer.hostname}}"
-    document.getElementById("{{ form.platform.id_for_label }}").value = "{{peer.platform}}"
-    document.getElementById("{{ form.ip.id_for_label }}").value = "{{peer.ip}}"
-</script>
 {% endblock %}
