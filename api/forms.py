@@ -71,3 +71,7 @@ class AddPeerForm(forms.Form):
     clientID = forms.CharField(label="Client Rustdesk ID", required=True)
     alias = forms.CharField(label="Client alias", required=True)
     tags = forms.CharField(label="Tags", required=False)
+    username = forms.CharField(label="Username", required=False)
+    os = forms.CharField(label="OS", required=False)
+    platform = forms.CharField(label="Platform", required=False)
+    ip = forms.CharField(label="IP", required=False)
