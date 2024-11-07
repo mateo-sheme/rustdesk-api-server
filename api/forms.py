@@ -66,3 +66,8 @@ class GenerateForm(forms.Form):
 
     defaultManual = forms.CharField(widget=forms.Textarea, required=False)
     overrideManual = forms.CharField(widget=forms.Textarea, required=False)
+
+class AddPeerForm(forms.Form):
+    clientID = forms.CharField(label="Client Rustdesk ID", required=True)
+    alias = forms.CharField(label="Client alias", required=True)
+    tags = forms.CharField(label="Tags", required=False)

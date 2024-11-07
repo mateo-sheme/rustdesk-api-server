@@ -11,6 +11,7 @@
       <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
       <div class="layui-card">
         <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "User Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】
+          <div class="layui-btn" ><a href="/api/add_peer">Add Peer</a></div>
         </div>
         <div class="layui-card-body">
           <table class="layui-table sortable">

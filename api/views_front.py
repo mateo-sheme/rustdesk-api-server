@@ -29,6 +29,7 @@ import os
 from io import BytesIO
 import xlwt
 from django.utils.translation import gettext as _
+from .forms import AddPeerForm
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 salt = 'xiaomo'
@@ -449,6 +450,37 @@ def delete_file(request):
         os.remove(file_path)
     return HttpResponseRedirect('/api/clients')
 
+@login_required(login_url='/api/user_action?action=login')
+def add_peer(request):
+    if request.method == 'POST':
+        form = AddPeerForm(request.POST)
+        if form.is_valid():
+            user_name = request.user
+            u = UserProfile.objects.get(username=user_name)
+            rid = form.cleaned_data['clientID']
+            uid = u.uid
+            username = form.cleaned_data['username']
+            os = form.cleaned_data['os']
+            plat = form.cleaned_data['platform']
+            alias = form.cleaned_data['alias']
+            tags = form.cleaned_data['tags']
+            ip = form.cleaned_data['ip']
+
+            peer = RustDeskPeer(
+                uid = uid,
+                rid = rid,
+                username = username,
+                hostname = os,
+                platform = plat,
+                alias = alias,
+                tags = tags,
+                ip = ip
+            )
+            peer.save()
+            return JsonResponse({'code':1, 'url':'/api/work'})
+    else:
+        form = AddPeerForm()
+    return render(request, 'add_peer.html', {'form': form, 'phone_or_desktop': is_mobile(request)})
 
 @login_required(login_url='/api/user_action?action=login')
 def conn_log(request):
