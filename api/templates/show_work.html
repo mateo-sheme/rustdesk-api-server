@@ -3,6 +3,7 @@
 {% block title %}RustDesk WebUI{% endblock %}
 {% block legend_name %}{{ "Devices" | translate }}{% endblock %}
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div style="padding: 20px; background-color: #F2F2F2;">
   <div class="layui-row layui-col-space15">
@@ -11,7 +12,7 @@
       <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
       <div class="layui-card">
         <div class="layui-card-header">{{ online_count_single }}/{{page_obj.paginator.count }}: {{ "User Devices Online" | translate }} - 【{{ "用户名" | translate }}:{{u.username}}】
-          <div class="layui-btn" ><a href="/api/add_peer">Add Peer</a></div>
+          <div class="layui-btn" ><a href="/api/add_peer"><i class='fas fa-plus'></i></a></div>
         </div>
         <div class="layui-card-body">
           <table class="layui-table sortable">
@@ -37,7 +38,7 @@
             <tbody>
               {% for one in page_obj %}
               <tr>
-                <td><div class="layui-btn" ><a href="/api/edit_peer?rid={{one.rid}}">E</a></div> / <div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}">D</a></div></td>
+                <td><div class="layui-btn" ><a href="/api/edit_peer?rid={{one.rid}}"><i class='fas fa-edit'></i></a></div> / <div class="layui-btn" ><a href="/api/delete_peer?rid={{one.rid}}"><i class='fas fa-trash'></i></a></div></td>
                 <td><a href=rustdesk://{{one.rid}}>{{one.rid}}</a> </td>
                 <td>{{one.status}} </td>
                 <td>{{one.alias}}</td>
@@ -112,7 +113,7 @@
                 {% if one.rust_user|length > 0 %}
                 <td>{{one.rust_user}} </td>
                 {% else %}
-                <td><div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}">Add User</a></div></td>
+                <td><div class="layui-btn" ><a href="/api/add_peer?rid={{one.rid}}"><i class='fas fa-plus'></i></a></div></td>
                 {% endif %}
                 <td>{{one.version}} </td>
                 <td>{{one.username}} </td>
