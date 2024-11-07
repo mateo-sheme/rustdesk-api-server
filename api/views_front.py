@@ -501,6 +501,8 @@ def edit_peer(request):
     else:
         rid = request.GET.get('rid','')
         peer = RustDeskPeer(Q(rid=rid))
+        print(rid)
+        print(peer)
         initial_data = {
             'clientID': rid,
             'alias': peer.alias,
