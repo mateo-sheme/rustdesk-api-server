@@ -485,7 +485,6 @@ def add_peer(request):
 def edit_peer(request):
     if request.method == 'POST':
         form = EditPeerForm(request.POST)
-        print(form)
         if form.is_valid():
             rid = form.cleaned_data['clientID']
             uid = request.user.id
@@ -505,7 +504,7 @@ def edit_peer(request):
 
             return HttpResponseRedirect('/api/work')
         else:
-            print("form is invalid")
+            print(form.errors)
     else:
         rid = request.GET.get('rid','')
         peer = RustDeskPeer.objects.get(rid=rid)
