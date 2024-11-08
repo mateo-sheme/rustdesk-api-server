@@ -23,16 +23,42 @@
 ## Installation
 
 ```bash
+# open to the directory you want to install the api server (change /opt to wherever you want)
+cd /opt
 # Clone the code locally
 git clone https://github.com/bryangerlach/rustdesk-api-server.git
 # Enter the directory
 cd rustdesk-api-server
+# setup a python virtual environment called rdgen
+python -m venv rustdesk-api
+# activate the python virtual environment 
+source rustdesk-api/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 python manage.py migrate
 # After ensuring dependencies are installed correctly, execute:
-# Please modify the port number yourself, it is recommended to keep 21114 as the default port for Rustdesk API
 python manage.py runserver 0.0.0.0:21114
+```
+
+## ## To autostart the server on boot, you can set up a systemd service called rustdeskapi.service
+
+```
+[Unit]
+Description=Rustdesk API Server
+[Service]
+Type=simple
+LimitNOFILE=1000000
+ExecStart=/opt/rustdesk-api-server/rustdesk-api/bin/python3 /opt/rustdesk-api-server/manage.py runserver 0.0.0.0:21114
+WorkingDirectory=/opt/rustdesk-api-server/
+User=root
+Group=root
+Restart=always
+StandardOutput=file:/var/log/rustdesk/apiserver.log
+StandardError=file:/var/log/rustdesk/apiserver.error
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
 ```
 
 ## Updating
@@ -42,6 +68,7 @@ python manage.py runserver 0.0.0.0:21114
 systemctl stop rustdeskapi
 cd /opt/rustdesk/rustdesk-api-server
 git pull
+source rustdesk-api/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 systemctl start rustdeskapi
@@ -91,7 +118,7 @@ from pysqlite3 import dbapi2 as Database # enable pysqlite3
 
 - Slow Connection Speed
 
-  The new version Key mode connection speed is slow. You can start the service on the server without the -k parameter. At this time, the client cannot configure the key either.
+  Use the client generator to generate a client that has the connection delay removed
 
 - Web Control Terminal Configuration
 
@@ -108,6 +135,10 @@ from pysqlite3 import dbapi2 as Database # enable pysqlite3
   This operation is highly likely to be a combination of docker configuration + nginx reverse proxy + SSL. Pay attention to modifying CSRF_TRUSTED_ORIGINS. If it is SSL, it starts with https, otherwise it is http.
 
 ## Other Related Tools
+
+- [rdgen](https://github.com/bryangerlach/rdgen)
+
+- [infinite remote](https://github.com/infiniteremote/installer)
 
 - [CMD script for modifying client ID](https://github.com/abdullah-erturk/RustDesk-ID-Changer)
 
