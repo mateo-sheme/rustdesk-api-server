@@ -72,7 +72,7 @@ class AddPeerForm(forms.Form):
     alias = forms.CharField(label="Client alias", required=True)
     tags = forms.CharField(label="Tags", required=False)
     username = forms.CharField(label="Username", required=False)
-    os = forms.CharField(label="OS", required=False)
+    hostname = forms.CharField(label="OS", required=False)
     platform = forms.CharField(label="Platform", required=False)
     ip = forms.CharField(label="IP", required=False)
 
