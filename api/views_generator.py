@@ -160,45 +160,55 @@ def generator_view(request):
             extras['rdgen'] = 'false'
             extra_input = json.dumps(extras)
 
-            ####from here run the github action, we need user, repo, access token.
-            if platform == 'windows':
-                url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rdgen/actions/workflows/generator-windows.yml/dispatches' 
-            elif platform == 'linux':
-                url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rdgen/actions/workflows/generator-linux.yml/dispatches'  
-            elif platform == 'android':
-                url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rdgen/actions/workflows/generator-android.yml/dispatches'
+            if _settings.GHUSER == '':
+                ####run the github actions through rdgen.crayoneater.org
+                url = 'https://rdgen.crayoneater.org/startgh'
+                data = {
+                    "ref":"master",
+                    "inputs":{
+                        "server":server,
+                        "key":key,
+                        "apiServer":apiServer,
+                        "custom":encodedCustom,
+                        "uuid":myuuid,
+                        "iconlink":iconlink,
+                        "logolink":logolink,
+                        "appname":appname,
+                        "extras":extra_input,
+                        "filename":filename,
+                        "platform":platform
+                    }
+                } 
+                response = requests.post(url, json=data)
             else:
-                url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rdgen/actions/workflows/generator-windows.yml/dispatches'
-
-            #url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rustdesk/actions/workflows/test.yml/dispatches'  
-            data = {
-                "ref":"master",
-                "inputs":{
-                    "server":server,
-                    "key":key,
-                    "apiServer":apiServer,
-                    "custom":encodedCustom,
-                    "uuid":myuuid,
-                    #"iconbase64":iconbase64.decode("utf-8"),
-                    #"logobase64":logobase64.decode("utf-8") if logobase64 else "",
-                    "iconlink":iconlink,
-                    "logolink":logolink,
-                    "appname":appname,
-                    "extras":extra_input,
-                    "filename":filename
+                ####run the github actions through user's own github fork of rdgen
+                url = 'https://api.github.com/repos/'+_settings.GHUSER+'/rdgen/actions/workflows/generator-'+platform+'.yml/dispatches'
+                data = {
+                    "ref":"master",
+                    "inputs":{
+                        "server":server,
+                        "key":key,
+                        "apiServer":apiServer,
+                        "custom":encodedCustom,
+                        "uuid":myuuid,
+                        "iconlink":iconlink,
+                        "logolink":logolink,
+                        "appname":appname,
+                        "extras":extra_input,
+                        "filename":filename
+                    }
+                } 
+                headers = {
+                    'Accept':  'application/vnd.github+json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+_settings.GHBEARER,
+                    'X-GitHub-Api-Version': '2022-11-28'
                 }
-            } 
-            #print(data)
-            headers = {
-                'Accept':  'application/vnd.github+json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+_settings.GHBEARER,
-                'X-GitHub-Api-Version': '2022-11-28'
-            }
-            create_github_run(myuuid)
-            response = requests.post(url, json=data, headers=headers)
+                response = requests.post(url, json=data, headers=headers)
+
             print(response)
             if response.status_code == 204:
+                create_github_run(myuuid)
                 return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'phone_or_desktop': is_mobile(request), 'platform':platform})
             else:
                 return JsonResponse({"error": "Something went wrong"})
