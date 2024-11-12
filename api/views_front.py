@@ -29,7 +29,7 @@ import os
 from io import BytesIO
 import xlwt
 from django.utils.translation import gettext as _
-from .forms import AddPeerForm, EditPeerForm
+from .forms import AddPeerForm, EditPeerForm, AssignPeerForm
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 salt = 'xiaomo'
@@ -519,6 +519,40 @@ def edit_peer(request):
         }
         form = EditPeerForm(initial=initial_data)
         return render(request, 'edit_peer.html', {'form': form, 'peer': peer, 'phone_or_desktop': is_mobile(request)})
+    
+@login_required(login_url='/api/user_action?action=login')
+def assign_peer(request):
+    if request.method == 'POST':
+        form = AssignPeerForm(request.POST)
+        if form.is_valid():
+            rid = form.cleaned_data['clientID']
+            uid = form.cleaned_data['uid']
+            username = form.cleaned_data['username']
+            hostname = form.cleaned_data['hostname']
+            plat = form.cleaned_data['platform']
+            alias = form.cleaned_data['alias']
+            tags = form.cleaned_data['tags']
+            ip = form.cleaned_data['ip']
+
+            peer = RustDeskPeer(
+                uid = uid.id,
+                rid = rid,
+                username = username,
+                hostname = hostname,
+                platform = plat,
+                alias = alias,
+                tags = tags,
+                ip = ip
+            )
+            peer.save()
+            return HttpResponseRedirect('/api/work')
+        else:
+            print(form.errors)
+    else:
+        rid = request.GET.get('rid')
+        form = AssignPeerForm()
+        #get list of users from the database
+        return render(request, 'assign_peer.html', {'form':form, 'rid': rid})
     
 @login_required(login_url='/api/user_action?action=login')
 def delete_peer(request):
