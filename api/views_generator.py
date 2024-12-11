@@ -26,6 +26,7 @@ def generator_view(request):
             platform = form.cleaned_data['platform']
             version = form.cleaned_data['version']
             delayFix = form.cleaned_data['delayFix']
+            cycleMonitor = form.cleaned_data['cycleMonitor']
             server = form.cleaned_data['serverIP']
             key = form.cleaned_data['key']
             apiServer = form.cleaned_data['apiServer']
@@ -158,6 +159,7 @@ def generator_view(request):
             extras['delayFix'] = 'true' if delayFix else 'false'
             extras['version'] = version
             extras['rdgen'] = 'false'
+            extras['cycleMonitor'] = 'true' if cycleMonitor else 'false'
             extra_input = json.dumps(extras)
 
             if _settings.GHUSER == '':
