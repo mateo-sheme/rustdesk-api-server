@@ -37,7 +37,8 @@ ALLOW_REGISTRATION = True if ALLOW_REGISTRATION.lower() == 'true' else False
 
 GHUSER = os.environ.get("GHUSER", '')
 GHBEARER = os.environ.get("GHBEARER", '')
-
+PROTOCOL = os.environ.get("PROTOCOL", 'https')
+REPONAME = os.environ.get("REPONAME", 'rdgen')
 
 # ==========数据库配置 开始=====================
 DATABASE_TYPE = os.environ.get("DATABASE_TYPE", 'SQLITE')
