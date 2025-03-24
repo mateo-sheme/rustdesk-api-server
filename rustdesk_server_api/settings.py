@@ -37,6 +37,7 @@ ALLOW_REGISTRATION = True if ALLOW_REGISTRATION.lower() == 'true' else False
 
 GHUSER = os.environ.get("GHUSER", '')
 GHBEARER = os.environ.get("GHBEARER", '')
+GENURL = os.environ.get("GENURL", '')
 PROTOCOL = os.environ.get("PROTOCOL", 'https')
 REPONAME = os.environ.get("REPONAME", 'rdgen')
 
