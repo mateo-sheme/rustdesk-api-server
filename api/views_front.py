@@ -335,85 +335,85 @@ def sys_info(request):
 @login_required(login_url='/api/user_action?action=login')
 def clients(request):
     basedir = os.path.join('clients')
-    androidaarch64 = os.path.join(basedir,'android','aarch64')
-    androidarmv7 = os.path.join(basedir,'android','armv7')
-    linuxaarch64 = os.path.join(basedir,'linux','aarch64')
-    linuxx86_64 = os.path.join(basedir,'linux','x86_64')
-    mocos = os.path.join(basedir,'macOS')
-    sciter = os.path.join(basedir,'sciter')
+    # androidaarch64 = os.path.join(basedir,'android','aarch64')
+    # androidarmv7 = os.path.join(basedir,'android','armv7')
+    # linuxaarch64 = os.path.join(basedir,'linux','aarch64')
+    # linuxx86_64 = os.path.join(basedir,'linux','x86_64')
+    # mocos = os.path.join(basedir,'macOS')
+    # sciter = os.path.join(basedir,'sciter')
     custom = os.path.join(basedir,'custom')
-    client_files = {}
+    # client_files = {}
     client_custom_files = {}
-    if os.path.exists(basedir):
-        for file in os.listdir(basedir):
-            if (file.endswith(".exe") or file.endswith(".msi")):
-                filepath = os.path.join(basedir,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': basedir
-                }
-    if os.path.exists(androidaarch64):
-        for file in os.listdir(androidaarch64):
-            if file.endswith(".apk"):
-                filepath = os.path.join(androidaarch64,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': androidaarch64
-                }
-    if os.path.exists(androidarmv7):
-        for file in os.listdir(androidarmv7):
-            if file.endswith(".apk"):
-                filepath = os.path.join(androidarmv7,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': androidarmv7
-                }
-    if os.path.exists(linuxaarch64):
-        for file in os.listdir(linuxaarch64):
-            if (file.endswith(".rpm") or file.endswith(".deb")):
-                filepath = os.path.join(linuxaarch64,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': linuxaarch64
-                }
-    if os.path.exists(linuxx86_64):
-        for file in os.listdir(linuxx86_64):
-            if (file.endswith(".rpm") or file.endswith(".deb")):
-                filepath = os.path.join(linuxx86_64,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': linuxx86_64
-                }
-    if os.path.exists(mocos):
-        for file in os.listdir(mocos):
-            if file.endswith(".dmg"):
-                filepath = os.path.join(mocos,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': mocos
-                }
-    if os.path.exists(sciter):
-        for file in os.listdir(sciter):
-            if file.endswith(".exe"):
-                filepath = os.path.join(sciter,file)
-                modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
-                client_files[file] = {
-                    'file': file,
-                    'modified': modified,
-                    'path': sciter
-                }
+    # if os.path.exists(basedir):
+    #     for file in os.listdir(basedir):
+    #         if (file.endswith(".exe") or file.endswith(".msi")):
+    #             filepath = os.path.join(basedir,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': basedir
+    #             }
+    # if os.path.exists(androidaarch64):
+    #     for file in os.listdir(androidaarch64):
+    #         if file.endswith(".apk"):
+    #             filepath = os.path.join(androidaarch64,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': androidaarch64
+    #             }
+    # if os.path.exists(androidarmv7):
+    #     for file in os.listdir(androidarmv7):
+    #         if file.endswith(".apk"):
+    #             filepath = os.path.join(androidarmv7,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': androidarmv7
+    #             }
+    # if os.path.exists(linuxaarch64):
+    #     for file in os.listdir(linuxaarch64):
+    #         if (file.endswith(".rpm") or file.endswith(".deb")):
+    #             filepath = os.path.join(linuxaarch64,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': linuxaarch64
+    #             }
+    # if os.path.exists(linuxx86_64):
+    #     for file in os.listdir(linuxx86_64):
+    #         if (file.endswith(".rpm") or file.endswith(".deb")):
+    #             filepath = os.path.join(linuxx86_64,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': linuxx86_64
+    #             }
+    # if os.path.exists(mocos):
+    #     for file in os.listdir(mocos):
+    #         if file.endswith(".dmg"):
+    #             filepath = os.path.join(mocos,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': mocos
+    #             }
+    # if os.path.exists(sciter):
+    #     for file in os.listdir(sciter):
+    #         if file.endswith(".exe"):
+    #             filepath = os.path.join(sciter,file)
+    #             modified = datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime('%Y-%m-%d %I:%M:%S %p')
+    #             client_files[file] = {
+    #                 'file': file,
+    #                 'modified': modified,
+    #                 'path': sciter
+    #             }
     if os.path.exists(custom):
         for file in os.listdir(custom):
             #if file.endswith(".exe"):
@@ -424,7 +424,8 @@ def clients(request):
                 'modified': modified,
                 'path': custom
             }
-    return render(request, 'clients.html', {'client_files': client_files, 'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
+    # return render(request, 'clients.html', {'client_files': client_files, 'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
+    return render(request, 'clients.html', {'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
 
 def download_file(request, filename, path):
     file_path = os.path.join(str(BASE_DIR),path,filename)
