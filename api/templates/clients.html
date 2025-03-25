@@ -81,6 +81,7 @@
                     <td>{{one.id}}</td>
                     <td>{{one.uuid}}</td>
                     <td>{{one.status}}</td>
+                    <td><a href='/api/delete_pending?id={{one.id}}'>Delete</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

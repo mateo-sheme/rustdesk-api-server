@@ -258,6 +258,13 @@ def download_client(request):
 
     return response
 
+@login_required(login_url='/api/user_action?action=login')
+def delete_pending(request):
+    id = request.GET['id']
+    pending = GithubRun.objects.get(id=id)
+    pending.delete()
+    return HttpResponseRedirect('/api/clients')
+
 def save_png(file, uuid, domain):
     file_save_path = "png/%s/%s" % (uuid, quote(file.name))
     Path("png/%s" % uuid).mkdir(parents=True, exist_ok=True)
