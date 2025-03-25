@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink, ConnLog, FileLog
+from api.models import RustDeskPeer, RustDesDevice, UserProfile, ShareLink, ConnLog, FileLog, GithubRun
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator
 from django.http import HttpResponse
@@ -424,8 +424,9 @@ def clients(request):
                 'modified': modified,
                 'path': custom
             }
+    pending_clients = GithubRun.objects.exclude(status__in=["Success", "Generation failed, try again", "Generation cancelled, try again"])
     # return render(request, 'clients.html', {'client_files': client_files, 'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
-    return render(request, 'clients.html', {'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
+    return render(request, 'clients.html', {'pending_clients': pending_clients, 'client_custom_files': client_custom_files, 'phone_or_desktop': is_mobile(request)})
 
 def download_file(request, filename, path):
     file_path = os.path.join(str(BASE_DIR),path,filename)

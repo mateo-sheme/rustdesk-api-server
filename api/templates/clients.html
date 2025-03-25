@@ -67,6 +67,26 @@
         </table>
     </div> {% endcomment %}
     <div class="section">
+        <h1>Clients Building...</h1>
+        <table class="sortable">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>uuid</th>
+                    <th>Status</th>
+                </tr>
+                {% for one in pending_clients %}
+                <tr>
+                    <td>{{one.id}}</td>
+                    <td>{{one.uuid}}</td>
+                    <td>{{one.status}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="section">
         <h1>Custom Clients</h1>
         <table class="sortable">
             <thead></thead>
