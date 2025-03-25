@@ -39,7 +39,6 @@ GHUSER = os.environ.get("GHUSER", '')
 GHBEARER = os.environ.get("GHBEARER", '')
 GENURL = os.environ.get("GENURL", '')
 PROTOCOL = os.environ.get("PROTOCOL", 'https')
-HOST = os.environ.get("HOST",'')
 REPONAME = os.environ.get("REPONAME", 'rdgen')
 
 # ==========数据库配置 开始=====================
