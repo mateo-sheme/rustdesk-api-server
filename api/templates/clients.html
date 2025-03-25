@@ -74,12 +74,14 @@
             <tbody>
                 <tr>
                     <th>ID</th>
+                    <th>Name</th>
                     <th>uuid</th>
                     <th>Status</th>
                 </tr>
                 {% for one in pending_clients %}
                 <tr>
                     <td>{{one.id}}</td>
+                    <td>{{one.name}}</td>
                     <td>{{one.uuid}}</td>
                     <td>{{one.status}}</td>
                     <td><a href='/api/delete_pending?id={{one.id}}'>Delete</a></td>
