@@ -66,6 +66,7 @@
             </tbody>
         </table>
     </div> {% endcomment %}
+    {% if pending_clients %}
     <div class="section">
         <h1>Clients Building...</h1>
         <table class="sortable">
@@ -87,6 +88,7 @@
             </tbody>
         </table>
     </div>
+    {% endif %}
     <div class="section">
         <h1>Custom Clients</h1>
         <table class="sortable">
