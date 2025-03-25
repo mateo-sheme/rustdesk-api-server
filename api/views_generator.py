@@ -217,7 +217,7 @@ def generator_view(request):
                 'Authorization': 'Bearer '+_settings.GHBEARER,
                 'X-GitHub-Api-Version': '2022-11-28'
             }
-            create_github_run(myuuid,filename)
+            create_github_run(myuuid,filename,platform)
             response = requests.post(url, json=data, headers=headers)
             print(response)
             if response.status_code == 204:
@@ -304,11 +304,12 @@ def get_png(request):
     return response
 
 
-def create_github_run(myuuid, myname):
+def create_github_run(myuuid, myname, myplatform):
     new_github_run = GithubRun(
         uuid=myuuid,
         status="Starting generator...please wait",
-        name=myname
+        name=myname,
+        platform=myplatform
     )
     new_github_run.save()
 

@@ -150,3 +150,4 @@ class GithubRun(models.Model):
     uuid = models.CharField(verbose_name="uuid", max_length=100)
     status = models.CharField(verbose_name="status", max_length=100)
     name = models.CharField(verbose_name="name", max_length=100, default="")
+    platform = models.CharField(verbose_name="platform", max_length=100, default="")
