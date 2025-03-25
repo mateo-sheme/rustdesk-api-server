@@ -41,6 +41,9 @@ GENURL = os.environ.get("GENURL", '')
 PROTOCOL = os.environ.get("PROTOCOL", 'https')
 REPONAME = os.environ.get("REPONAME", 'rdgen')
 
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+
 # ==========数据库配置 开始=====================
 DATABASE_TYPE = os.environ.get("DATABASE_TYPE", 'SQLITE')
 MYSQL_DBNAME = os.environ.get("MYSQL_DBNAME", '-')
