@@ -221,7 +221,8 @@ def generator_view(request):
             response = requests.post(url, json=data, headers=headers)
             print(response)
             if response.status_code == 204:
-                return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'phone_or_desktop': is_mobile(request), 'platform':platform})
+                #return render(request, 'waiting.html', {'filename':filename, 'uuid':myuuid, 'status':"Starting generator...please wait", 'phone_or_desktop': is_mobile(request), 'platform':platform})
+                return HttpResponseRedirect('/api/clients')
             else:
                 return JsonResponse({"error": "Something went wrong"})
     else:
