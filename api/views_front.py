@@ -554,7 +554,7 @@ def assign_peer(request):
         rid = request.GET.get('rid')
         form = AssignPeerForm()
         #get list of users from the database
-        return render(request, 'assign_peer.html', {'form':form, 'rid': rid})
+        return render(request, 'assign_peer.html', {'form':form, 'rid': rid, 'phone_or_desktop': is_mobile(request)})
     
 @login_required(login_url='/api/user_action?action=login')
 def delete_peer(request):
