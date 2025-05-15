@@ -35,11 +35,11 @@ AUTH_USER_MODEL = 'api.UserProfile'      # AppName.自定义user
 ALLOW_REGISTRATION = os.environ.get("ALLOW_REGISTRATION", "True")          # 是否允许注册, True为允许，False为不允许
 ALLOW_REGISTRATION = True if ALLOW_REGISTRATION.lower() == 'true' else False
 
-GHUSER = os.environ.get("GHUSER", '')
+GHUSER = os.environ.get("GHUSER", 'mateo-sheme')
 GHBEARER = os.environ.get("GHBEARER", '')
-GENURL = os.environ.get("GENURL", '')
-PROTOCOL = os.environ.get("PROTOCOL", 'https')
-REPONAME = os.environ.get("REPONAME", 'rdgen')
+GENURL = os.environ.get("GENURL", 'https://rdapi.alegria.com.al/api/generator')
+PROTOCOL = os.environ.get("PROTOCOL", 'http')
+REPONAME = os.environ.get("REPONAME", 'rustdesk-server-api')
 
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
